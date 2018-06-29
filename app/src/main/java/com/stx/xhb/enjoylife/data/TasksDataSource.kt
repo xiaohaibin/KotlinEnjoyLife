@@ -9,13 +9,6 @@ package com.stx.xhb.enjoylife.data
  */
 interface TasksDataSource {
 
-    interface LoadTaskCallback<T> {
-
-        fun onTaskLoaded(data: T)
-
-        fun onDataNotAvailable(msg: String)
-    }
-
     /**
      * 释放资源
      */

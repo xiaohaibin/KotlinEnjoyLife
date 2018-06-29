@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">core</string>
+    <string name="action_share">分享</string>
 </resources>

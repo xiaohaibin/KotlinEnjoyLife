@@ -20,7 +20,7 @@ import io.reactivex.subjects.BehaviorSubject
  * @github:https://github.com/xiaohaibin
  * @describe:RxFragment
  */
-abstract class RxFragment:Fragment(),LifecycleProvider<FragmentEvent> {
+abstract class RxFragment:android.app.Fragment(),LifecycleProvider<FragmentEvent> {
 
     private val lifecycleSubject = BehaviorSubject.create<FragmentEvent>()
 
