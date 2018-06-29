@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group
+        android:id="@+id/settings"
+        android:checkableBehavior="none">
+
+        <!--<item-->
+            <!--android:id="@+id/nav_setting"-->
+            <!--android:icon="@drawable/ic_settings_black_24px"-->
+            <!--android:title="@string/activity_setting_title"/>-->
+        <item
+            android:id="@+id/nav_about"
+            android:icon="@drawable/ic_sort_black_24px"
+            android:title="@string/activity_about_title"/>
+    </group>
+</menu>

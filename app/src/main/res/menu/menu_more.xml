@@ -1,0 +1,20 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto"
+      xmlns:tools="http://schemas.android.com/tools"
+      tools:context="me.drakeet.meizhi.ui.AboutActivity">
+    <item
+        android:id="@+id/menu_share"
+        android:orderInCategory="80"
+        android:title="@string/action_share"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/menu_save"
+        android:orderInCategory="80"
+        android:title="@string/menu_save"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/menu_setting_picture"
+        android:orderInCategory="90"
+        android:title="@string/menu_setting_picture"
+        app:showAsAction="never"/>
+</menu>

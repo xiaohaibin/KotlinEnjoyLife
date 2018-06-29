@@ -1,0 +1,30 @@
+<resources>
+    <string name="app_name">乐享</string>
+    <string name="navigation_drawer_open" translatable="false">Open navigation drawer</string>
+    <string name="navigation_drawer_close" translatable="false">Close navigation drawer</string>
+    <string name="default_description">生活的美好，需要你用心去发现，用眼去摄录</string>
+    <string name="fragment_zhihu_title">知乎日报</string>
+    <string name="fragment_video_title">视频推荐</string>
+    <string name="fragment_image_title">图虫摄影</string>
+    <string name="fragment_wallpaper_title">图虫摄影</string>
+    <string name="activity_setting_title">设置</string>
+    <string name="activity_about_title">关于</string>
+    <string name="introduce_and_help">应用简介</string>
+    <string name="open_source_lis">用到的开源库</string>
+    <string name="open_source_libraries_list">\ncom.android.support:appcompat-v7:25.4.0\ncom.android.support:recyclerview-v7:25.4.0\ncom.android.support:design:25.4.0\ncom.github.bumptech.glide:glide:3.7.0\ncom.shuyu:GSYVideoPlayer:2.0.2\ncom.github.chrisbanes:PhotoView:2.1.3\ncom.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.40\ncom.jaeger.statusbaruitl:library:1.3.6\n...</string>
+    <string name="about_coder">作者简介</string>
+    <string name="introduce_about_coder">一个热衷于移动开发、喜欢摄影、旅游和美食的程序猿...</string>
+    <string name="share">分享给朋友</string>
+    <string name="menu_save">保存</string>
+    <string name="menu_setting_picture">设为壁纸</string>
+    <string name="action_share">分享</string>
+    <string name="picture_has_save_to">图片已保存至 %s 文件夹</string>
+    <string name="string_img_save_failed">图片保存失败，请重试</string>
+    <string name="ask_saving_picture">保存到手机?</string>
+    <string name="share_text">发现了一款非常棒的App「乐享」，每天一张精选妹纸图、一个精选短视频，知乎美文，完全开源不收费，太赞了! 下载地址：https://www.coolapk.com/apk/185913</string>
+    <string name="introduce">每天一张精选妹纸图、一个精选小视频，一篇知乎美文。\n\n图片数据内容来源于图虫摄影网 \n\n视频数据来源于开眼视频 \n\n我的 GitHub: https://github.com/xiaohaibin\n\n完全开源，如果你觉得不错，可以帮忙分享给你更多的朋友，这是我最大的动力和支持，非常感谢！\n\n</string>
+    <string name="news_preview_image">图片预览</string>
+    <string name="share_to">分享至…</string>
+    <string name="share_this_news">分享这个新闻</string>
+    <string name="share_image_to">分享图片至...</string>
+</resources>
