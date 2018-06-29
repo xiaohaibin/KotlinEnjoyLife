@@ -16,5 +16,4 @@ class ZhiHuFragment:BaseFragment() {
         return R.layout.fragment_common
     }
 
-
 }

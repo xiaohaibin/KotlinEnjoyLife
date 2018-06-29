@@ -35,10 +35,10 @@ class MainActivity : BaseActivity() {
     }
 
     override fun initView() {
-        toolbar = findViewById(R.id.toolbar) as Toolbar?
-        ctlMain = findViewById(R.id.ctl_main) as CoordinatorLayout?
-        navView = findViewById(R.id.nav_view) as NavigationView?
-        drawerLayout = findViewById(R.id.drawer_layout) as DrawerLayout?
+        toolbar = findViewById(R.id.toolbar) as Toolbar
+        ctlMain = findViewById(R.id.ctl_main) as CoordinatorLayout
+        navView = findViewById(R.id.nav_view) as NavigationView
+        drawerLayout = findViewById(R.id.drawer_layout) as DrawerLayout
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
         setSupportActionBar(toolbar)
         ctlMain!!.fitsSystemWindows = false
@@ -94,7 +94,6 @@ class MainActivity : BaseActivity() {
 
     /**
      * 添加Fragment
-     *
      * @param name
      */
     private fun addFragment(name: String) {
@@ -108,7 +107,6 @@ class MainActivity : BaseActivity() {
 
     /**
      * Fragment切换
-     *
      * @param fragment
      * @param title
      */

@@ -18,5 +18,12 @@
         <item name="android:textColor">@android:color/transparent</item>
     </style>
 
+    <style name="ToolbarTheme" parent="AppTheme.AppBarOverlay">
+        <item name="android:textColorPrimary">@android:color/white</item>
+        <item name="android:textColorSecondary">@android:color/white</item>
+        <item name="android:actionMenuTextColor">@color/color_888888</item>
+        <item name="colorControlActivated">@android:color/white</item>
+    </style>
+
 
 </resources>
