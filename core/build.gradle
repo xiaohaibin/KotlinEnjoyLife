@@ -46,5 +46,10 @@ dependencies {
     api 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.40'
     //状态栏工具类
     api 'com.jaeger.statusbaruitl:library:1.3.6'
+    //squareup
+    api 'com.squareup.retrofit2:retrofit:2.3.0'
+    api 'com.squareup.retrofit2:converter-gson:2.3.0'
+    api 'com.squareup.retrofit2:adapter-rxjava:2.2.0'
+    api 'com.squareup.okhttp3:logging-interceptor:3.6.0'
 
 }
