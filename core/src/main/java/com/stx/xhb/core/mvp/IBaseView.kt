@@ -8,14 +8,4 @@ package com.stx.xhb.core.mvp
  * @describe:IBaseView
  */
 interface IBaseView {
-
-    //显示loading
-    fun showLoading()
-
-    //关闭loading
-    fun hideLoading()
-
-    //显示吐司
-    fun showToast(msg: String)
-
 }

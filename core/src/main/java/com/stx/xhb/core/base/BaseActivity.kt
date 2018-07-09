@@ -1,16 +1,25 @@
 package com.stx.xhb.core.base
 
+import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Color
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.os.PersistableBundle
+import android.provider.Settings
+import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
 import android.support.v4.widget.DrawerLayout
 import android.support.v7.widget.Toolbar
+import android.util.Log
 import android.view.Window
 import com.jaeger.library.StatusBarUtil
 import com.stx.xhb.core.R
+import com.stx.xhb.core.mvp.IBaseView
 import com.stx.xhb.core.rx.RxAppCompatActivity
+import rx.Subscription
+import rx.subscriptions.CompositeSubscription
+import java.util.*
 
 /**
  * @author: xiaohaibin.
@@ -19,7 +28,7 @@ import com.stx.xhb.core.rx.RxAppCompatActivity
  * @github:https://github.com/xiaohaibin
  * @describe:BaseActivity
  */
-abstract class  BaseActivity: RxAppCompatActivity() {
+abstract class BaseActivity : RxAppCompatActivity(), IBaseView {
 
     protected abstract fun getLayoutResource(): Int
 
@@ -28,12 +37,15 @@ abstract class  BaseActivity: RxAppCompatActivity() {
     protected abstract fun initData()
 
     protected abstract fun setListener()
+    //权限相关
+    private val TAG = "PermissionsUtil"
+    private var REQUEST_CODE_PERMISSION = 0x00099
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
         StatusBarUtil.setColor(this, ContextCompat.getColor(this, R.color.colorGreen))
-        if (getLayoutResource()!=0){
+        if (getLayoutResource() != 0) {
             setContentView(getLayoutResource())
         }
         initData()
@@ -58,7 +70,158 @@ abstract class  BaseActivity: RxAppCompatActivity() {
         }
     }
 
+    private var mCompositeSubscription: CompositeSubscription? = null
 
 
+    fun getCompositeSubscription(): CompositeSubscription {
+        if (this.mCompositeSubscription == null) {
+            this.mCompositeSubscription = CompositeSubscription()
+        }
+
+        return this.mCompositeSubscription!!
+    }
+
+
+    fun addSubscription(s: Subscription) {
+        if (this.mCompositeSubscription == null) {
+            this.mCompositeSubscription = CompositeSubscription()
+        }
+
+        this.mCompositeSubscription!!.add(s)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        this.mCompositeSubscription!!.unsubscribe()
+    }
+
+
+    /**
+     * 请求权限
+     *
+     *
+     * 警告：此处除了用户拒绝外，唯一可能出现无法获取权限或失败的情况是在AndroidManifest.xml中未声明权限信息
+     * Android6.0+即便需要动态请求权限（重点）但不代表着不需要在AndroidManifest.xml中进行声明。
+     *
+     * @param permissions 请求的权限
+     * @param requestCode 请求权限的请求码
+     */
+    fun requestPermission(permissions: Array<String>, requestCode: Int) {
+        this.REQUEST_CODE_PERMISSION = requestCode
+        if (checkPermissions(permissions)) {
+            permissionSuccess(REQUEST_CODE_PERMISSION)
+        } else {
+            val needPermissions = getDeniedPermissions(permissions)
+            ActivityCompat.requestPermissions(this, needPermissions.toTypedArray(), REQUEST_CODE_PERMISSION)
+        }
+    }
+
+    /**
+     * 检测所有的权限是否都已授权
+     *
+     * @param permissions
+     * @return
+     */
+    fun checkPermissions(permissions: Array<String>): Boolean {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+            return true
+        }
+
+        for (permission in permissions) {
+            if (ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED) {
+                return false
+            }
+        }
+        return true
+    }
+
+    /**
+     * 获取权限集中需要申请权限的列表
+     *
+     * @param permissions
+     * @return
+     */
+    private fun getDeniedPermissions(permissions: Array<String>): List<String> {
+        val needRequestPermissionList = ArrayList<String>()
+        for (permission in permissions) {
+            if (ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED || ActivityCompat.shouldShowRequestPermissionRationale(this, permission)) {
+                needRequestPermissionList.add(permission)
+            }
+        }
+        return needRequestPermissionList
+    }
+
+
+    /**
+     * 系统请求权限回调
+     *
+     * @param requestCode
+     * @param permissions
+     * @param grantResults
+     */
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == REQUEST_CODE_PERMISSION) {
+            if (verifyPermissions(grantResults)) {
+                permissionSuccess(REQUEST_CODE_PERMISSION)
+            } else {
+                permissionFail(REQUEST_CODE_PERMISSION)
+                showTipsDialog()
+            }
+        }
+    }
+
+    /**
+     * 确认所有的权限是否都已授权
+     *
+     * @param grantResults
+     * @return
+     */
+    private fun verifyPermissions(grantResults: IntArray): Boolean {
+        for (grantResult in grantResults) {
+            if (grantResult != PackageManager.PERMISSION_GRANTED) {
+                return false
+            }
+        }
+        return true
+    }
+
+    /**
+     * 显示提示对话框
+     */
+    fun showTipsDialog() {
+        android.support.v7.app.AlertDialog.Builder(this)
+                .setTitle("警告")
+                .setMessage("需要必要的权限才可以正常使用该功能，您已拒绝获得该权限。\n如果需要重新授权，您可以点击“允许”按钮进入系统设置进行授权")
+                .setNegativeButton("取消") { dialog, which -> dialog.dismiss() }
+                .setPositiveButton("确定") { dialog, which -> startAppSettings() }.show()
+    }
+
+    /**
+     * 权限获取失败
+     *
+     * @param requestCode
+     */
+    fun permissionFail(requestCode: Int) {
+        Log.d(TAG, "获取权限失败=$requestCode")
+    }
+
+    /**
+     * 启动当前应用设置页面
+     */
+    private fun startAppSettings() {
+        val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+        intent.data = Uri.parse("package:$packageName")
+        startActivity(intent)
+    }
+
+    /**
+     * 获取权限成功
+     *
+     * @param requestCode
+     */
+    fun permissionSuccess(requestCode: Int) {
+        Log.d(TAG, "获取权限成功=$requestCode")
+    }
 
 }
