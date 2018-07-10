@@ -15,4 +15,13 @@ class VideoFragment:BaseFragment() {
     override fun getLayoutResource(): Int {
         return R.layout.fragment_common
     }
+
+    override fun initView() {
+    }
+
+    override fun initData() {
+    }
+
+    override fun setListener() {
+    }
 }

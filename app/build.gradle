@@ -1,13 +1,14 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 
 android {
-    compileSdkVersion 25
+    compileSdkVersion 27
     defaultConfig {
         applicationId "com.stx.xhb.kotlinenjoylife"
         minSdkVersion 16
-        targetSdkVersion 25
+        targetSdkVersion 27
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -18,10 +19,18 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    packagingOptions {
+        pickFirst 'META-INF/*'
+    }
+
+    kapt {
+        generateStubs = true
+    }
 }
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation project(':core')
-    implementation 'com.android.support.constraint:constraint-layout:1.1.2'
+    implementation 'com.github.bumptech.glide:glide:4.7.1'
+    kapt  'com.github.bumptech.glide:compiler:4.7.1'
 }

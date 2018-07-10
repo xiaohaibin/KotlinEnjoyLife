@@ -10,12 +10,12 @@ import android.provider.Settings
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
 import android.support.v4.widget.DrawerLayout
+import android.support.v7.app.AlertDialog
 import android.support.v7.widget.Toolbar
 import android.util.Log
 import android.view.Window
 import com.jaeger.library.StatusBarUtil
 import com.stx.xhb.core.R
-import com.stx.xhb.core.mvp.IBaseView
 import com.stx.xhb.core.rx.RxAppCompatActivity
 import rx.Subscription
 import rx.subscriptions.CompositeSubscription
@@ -28,7 +28,7 @@ import java.util.*
  * @github:https://github.com/xiaohaibin
  * @describe:BaseActivity
  */
-abstract class BaseActivity : RxAppCompatActivity(), IBaseView {
+abstract class BaseActivity : RxAppCompatActivity() {
 
     protected abstract fun getLayoutResource(): Int
 
@@ -92,7 +92,9 @@ abstract class BaseActivity : RxAppCompatActivity(), IBaseView {
 
     override fun onDestroy() {
         super.onDestroy()
-        this.mCompositeSubscription!!.unsubscribe()
+        if (mCompositeSubscription != null) {
+            this.mCompositeSubscription!!.unsubscribe()
+        }
     }
 
 
@@ -190,11 +192,17 @@ abstract class BaseActivity : RxAppCompatActivity(), IBaseView {
      * 显示提示对话框
      */
     fun showTipsDialog() {
-        android.support.v7.app.AlertDialog.Builder(this)
+        AlertDialog.Builder(this)
                 .setTitle("警告")
-                .setMessage("需要必要的权限才可以正常使用该功能，您已拒绝获得该权限。\n如果需要重新授权，您可以点击“允许”按钮进入系统设置进行授权")
-                .setNegativeButton("取消") { dialog, which -> dialog.dismiss() }
-                .setPositiveButton("确定") { dialog, which -> startAppSettings() }.show()
+                .setMessage("需要必要的权限才可以正常使用该功能，您已拒绝获得该权限。\n" +
+                        "如果需要重新授权，您可以点击“允许”按钮进入系统设置进行授权")
+                .setNegativeButton("取消", { dialog, i ->
+                    dialog.dismiss()
+                })
+                .setPositiveButton("确定", { dialogInterface, i ->
+                    startAppSettings()
+                })
+                .show()
     }
 
     /**
