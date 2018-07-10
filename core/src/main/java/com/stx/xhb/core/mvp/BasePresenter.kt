@@ -12,7 +12,7 @@ import retrofit2.Response
  * @github:https://github.com/xiaohaibin
  * @describe:
  */
-class BasePresenter<T, V : IBaseView> : IPresenter<V> {
+open class BasePresenter<T, V : IBaseView> : IPresenter<V> {
 
     private var mView: V? = null
     private var mResponseCall: Call<T>? = null

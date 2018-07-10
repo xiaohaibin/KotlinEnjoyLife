@@ -44,7 +44,7 @@ abstract class BaseFragment: RxFragment(){
         initData()
         initView()
         setListener()
-        return (rootView as View?)!!
+        return rootView!!
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

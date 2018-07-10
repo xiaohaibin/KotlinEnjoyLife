@@ -70,34 +70,6 @@ abstract class BaseActivity : RxAppCompatActivity() {
         }
     }
 
-    private var mCompositeSubscription: CompositeSubscription? = null
-
-
-    fun getCompositeSubscription(): CompositeSubscription {
-        if (this.mCompositeSubscription == null) {
-            this.mCompositeSubscription = CompositeSubscription()
-        }
-
-        return this.mCompositeSubscription!!
-    }
-
-
-    fun addSubscription(s: Subscription) {
-        if (this.mCompositeSubscription == null) {
-            this.mCompositeSubscription = CompositeSubscription()
-        }
-
-        this.mCompositeSubscription!!.add(s)
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        if (mCompositeSubscription != null) {
-            this.mCompositeSubscription!!.unsubscribe()
-        }
-    }
-
-
     /**
      * 请求权限
      *
