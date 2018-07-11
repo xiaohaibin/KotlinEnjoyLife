@@ -8,4 +8,7 @@ package com.stx.xhb.core.mvp
  * @describe:IBaseView
  */
 interface IBaseView {
+    fun showLoading()
+    fun hideLoading()
+    fun showMsg(msg:String)
 }

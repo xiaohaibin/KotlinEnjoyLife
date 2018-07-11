@@ -8,4 +8,7 @@ package com.stx.xhb.core.mvp
  * @describe:
  */
 interface IModel {
+     fun onCreate()
+     fun start()
+     fun destory()
 }

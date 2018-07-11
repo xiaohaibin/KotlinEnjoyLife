@@ -55,4 +55,6 @@ dependencies {
     api 'com.squareup.retrofit2:adapter-rxjava:2.2.0'
     api 'com.squareup.okhttp3:logging-interceptor:3.8.1'
 
+    api 'com.squareup.picasso:picasso:2.5.2'
+
 }

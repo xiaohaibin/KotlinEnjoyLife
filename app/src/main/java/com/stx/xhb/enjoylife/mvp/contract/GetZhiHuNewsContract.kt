@@ -15,15 +15,11 @@ interface GetZhiHuNewsContract {
 
     interface Model : IModel {
         fun getNews(url: String)
-
         fun getNewsBefore(time: String)
     }
 
 
     interface View : IBaseView {
-
         fun onResponse(zhiHuNewsResponse: ZhiHuNewsResponse)
-
-        fun onFailure(msg: String)
     }
 }

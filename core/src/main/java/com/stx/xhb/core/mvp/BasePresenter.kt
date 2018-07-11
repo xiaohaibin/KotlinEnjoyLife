@@ -46,7 +46,7 @@ open class BasePresenter<T, V : IBaseView> : IPresenter<V> {
     }
 
     fun isViewBind(): Boolean {
-        return mView == null
+        return mView != null
     }
 
     fun getView(): V? {

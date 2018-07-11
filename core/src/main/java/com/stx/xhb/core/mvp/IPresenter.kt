@@ -8,6 +8,6 @@ package com.stx.xhb.core.mvp
  * @describe:
  */
 interface IPresenter<V> {
-    abstract fun attachView(mvpView: V)
-    abstract fun detachView()
+     fun attachView(mvpView: V)
+     fun detachView()
 }

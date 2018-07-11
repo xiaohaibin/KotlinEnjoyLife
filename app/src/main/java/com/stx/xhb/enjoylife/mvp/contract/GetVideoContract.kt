@@ -19,7 +19,5 @@ interface GetVideoContract {
 
     interface getVideoView : IBaseView {
         fun onResponse(response: VideoResponse)
-
-        fun onFailure(msg: String)
     }
 }

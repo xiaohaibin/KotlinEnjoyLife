@@ -2,6 +2,7 @@ package com.stx.xhb.core.base
 
 import android.app.Application
 import android.content.Context
+import com.tencent.bugly.Bugly.applicationContext
 
 /**
  * @author: xiaohaibin.
@@ -10,15 +11,23 @@ import android.content.Context
  * @github:https://github.com/xiaohaibin
  * @describe:
  */
-open class BaseApplication:Application() {
+open class BaseApplication : Application() {
 
-    private var mContext: Context? = null
 
-    fun getContext(): Context? {
-        return mContext
+    companion object {
+
+        private var mContext: Context? = null
+
+        fun getContext(): Context? {
+            return mContext
+        }
+
     }
+
     override fun onCreate() {
         super.onCreate()
         mContext = applicationContext
     }
+
+
 }

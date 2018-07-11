@@ -18,13 +18,6 @@ interface GetNewsContentContract {
     }
 
     interface View : IBaseView {
-
         fun onResponse(response: ZhiHuNewsContentResponse)
-
-        fun onFailed(msg: String)
-
-        fun showLoading()
-
-        fun hideLoading()
     }
 }
