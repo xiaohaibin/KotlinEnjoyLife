@@ -1,5 +1,6 @@
 package com.stx.xhb.core.base
 
+import android.app.PendingIntent.getActivity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Color
@@ -14,6 +15,7 @@ import android.support.v7.app.AlertDialog
 import android.support.v7.widget.Toolbar
 import android.util.Log
 import android.view.Window
+import android.widget.Toast
 import com.jaeger.library.StatusBarUtil
 import com.stx.xhb.core.R
 import com.stx.xhb.core.rx.RxAppCompatActivity
@@ -202,6 +204,37 @@ abstract class BaseActivity : RxAppCompatActivity() {
      */
     fun permissionSuccess(requestCode: Int) {
         Log.d(TAG, "获取权限成功=$requestCode")
+    }
+
+    private var mCompositeSubscription: CompositeSubscription? = null
+
+
+    fun getCompositeSubscription(): CompositeSubscription {
+        if (this.mCompositeSubscription == null) {
+            this.mCompositeSubscription = CompositeSubscription()
+        }
+
+        return this.mCompositeSubscription!!
+    }
+
+
+    fun addSubscription(s: Subscription) {
+        if (this.mCompositeSubscription == null) {
+            this.mCompositeSubscription = CompositeSubscription()
+        }
+
+        this.mCompositeSubscription!!.add(s)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        if (this.mCompositeSubscription != null) {
+            this.mCompositeSubscription?.unsubscribe()
+        }
+    }
+
+    fun showToast(message: CharSequence, duration: Int = Toast.LENGTH_SHORT){
+        Toast.makeText(this, message, duration).show()
     }
 
 }

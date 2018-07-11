@@ -56,5 +56,6 @@ dependencies {
     api 'com.squareup.okhttp3:logging-interceptor:3.8.1'
 
     api 'com.squareup.picasso:picasso:2.5.2'
-
+    api 'io.reactivex:rxjava:1.2.1'
+    api 'io.reactivex:rxandroid:1.2.1'
 }

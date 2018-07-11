@@ -2,9 +2,11 @@ package com.stx.xhb.core.base
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.stx.xhb.core.rx.RxFragment
 
 /**
@@ -98,7 +100,7 @@ abstract class BaseFragment: RxFragment(){
     /**
      * 当界面可见时的操作
      */
-    protected fun onVisible() {
+    protected open fun onVisible() {
         if (hasLoaded) {
             return
         }
@@ -119,6 +121,20 @@ abstract class BaseFragment: RxFragment(){
      */
     protected fun onInVisible() {
 
+    }
+
+    protected fun <E : View> getView(id: Int): E {
+        try {
+            return rootView?.findViewById(id) as E
+        } catch (ex: ClassCastException) {
+            Log.e("BaseFragment", "Could not cast View to concrete class.", ex)
+            throw ex
+        }
+
+    }
+
+    fun showToast(message: CharSequence, duration: Int = Toast.LENGTH_SHORT){
+        Toast.makeText(activity, message, duration).show()
     }
 
 

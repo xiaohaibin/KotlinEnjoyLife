@@ -12,7 +12,7 @@
     android:background="@drawable/bg_card"
     android:clickable="true">
 
-    <com.stx.xhb.enjoylife.ui.widget.RatioImageView
+    <com.stx.xhb.core.widget.RatioImageView
         android:id="@+id/iv_img"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
