@@ -11,7 +11,6 @@ import android.support.v7.app.AlertDialog
 import android.support.v7.widget.Toolbar
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
 import android.widget.TextView
 import com.bumptech.glide.request.target.SimpleTarget
 import com.bumptech.glide.request.transition.Transition
@@ -21,7 +20,6 @@ import com.stx.xhb.core.utils.ShareUtils
 import com.stx.xhb.enjoylife.R
 import com.stx.xhb.enjoylife.config.GlideApp
 import com.stx.xhb.enjoylife.ui.adapter.PhotoViewPagerAdapter
-import io.reactivex.android.schedulers.AndroidSchedulers
 import rx.functions.Action1
 import java.io.File
 import java.io.IOException

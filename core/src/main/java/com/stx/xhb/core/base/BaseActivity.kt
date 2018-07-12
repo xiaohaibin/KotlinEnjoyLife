@@ -50,8 +50,8 @@ abstract class BaseActivity : RxAppCompatActivity() {
         if (getLayoutResource() != 0) {
             setContentView(getLayoutResource())
         }
-        initData()
         initView()
+        initData()
         setListener()
     }
 
@@ -102,7 +102,6 @@ abstract class BaseActivity : RxAppCompatActivity() {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
             return true
         }
-
         for (permission in permissions) {
             if (ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED) {
                 return false
