@@ -43,8 +43,8 @@ abstract class BaseFragment: RxFragment(){
         } else {
             rootView = super.onCreateView(inflater, container, savedInstanceState)
         }
-        initData()
         initView()
+        initData()
         setListener()
         return rootView!!
     }

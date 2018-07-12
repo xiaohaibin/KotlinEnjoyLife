@@ -25,5 +25,44 @@
         <item name="colorControlActivated">@android:color/white</item>
     </style>
 
+    <style name="baseLayoutParam">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+    </style>
+
+    <style name="cardStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="cardRelativeLayoutStyle" parent="baseLayoutParam">
+        <item name="android:layout_margin">5dp</item>
+    </style>
+
+    <style name="cardImageViewStyle">
+        <item name="android:layout_alignParentLeft">true</item>
+        <item name="android:padding">10dp</item>
+        <item name="android:layout_height">95dp</item>
+        <item name="android:layout_width">95dp</item>
+    </style>
+
+    <style name="baseCardTextStyle" parent="baseLayoutParam">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_toLeftOf">@id/card_share_overflow</item>
+        <item name="android:layout_toRightOf">@id/thumbnail_image</item>
+        <item name="android:paddingLeft">8dp</item>
+        <item name="android:paddingTop">4dp</item>
+        <item name="android:paddingRight">15dp</item>
+        <item name="android:textAppearance">?android:attr/textAppearanceSmall</item>
+    </style>
+
+    <style name="cardOverflowIconStyle">
+        <item name="android:contentDescription">@string/share_this_news</item>
+        <item name="android:layout_width">24dp</item>
+        <item name="android:layout_height">24dp</item>
+        <item name="android:src">@drawable/ic_card_overflow</item>
+        <item name="android:layout_alignParentRight">true</item>
+    </style>
+
 
 </resources>

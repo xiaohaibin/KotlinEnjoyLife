@@ -34,15 +34,13 @@ class GetWallPaperPresenter(mvpView: GetWallPaperContract.View) : BasePresenter<
     override fun getWallPaper(page: Int) {
         request(ApiManager.ApiFactory.createTuChongApi().getWallPaper(page), object : LoadTaskCallback<TuChongWallPaperResponse> {
             override fun onTaskLoaded(data: TuChongWallPaperResponse) {
-                if (getView() != null && data.feedList != null && !data.feedList.isEmpty()) {
+                if (!data.feedList.isEmpty()) {
                     getView()?.onResponse(data.feedList, data.more)
                 }
             }
 
             override fun onDataNotAvailable(msg: String) {
-                if (getView() != null) {
-                    getView()?.showMsg(msg)
-                }
+                getView()?.showMsg(msg)
             }
         })
     }

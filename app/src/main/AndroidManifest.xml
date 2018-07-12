@@ -34,7 +34,7 @@
 
         <activity
             android:name=".MainActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".ui.activity.AboutActivity"
@@ -43,6 +43,27 @@
         <activity
             android:name=".ui.activity.PhotoViewActivity"
             android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".ui.activity.NewsDetailsActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".ui.activity.VideoDetailsActivity"
+            android:screenOrientation="portrait" />
+
+        <activity android:name=".ui.activity.VideoPlayActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="landscape"/>
+
+        <!-- 友盟appid设置 -->
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="57c79208e0f55ac973000327" />
+
+        <meta-data
+            android:name="UMENG_CHANNEL"
+            android:value="wandoujia" />
 
     </application>
 

@@ -3,7 +3,6 @@ package com.stx.xhb.enjoylife.ui.activity
 import android.Manifest
 import android.app.WallpaperManager
 import android.graphics.Bitmap
-import android.net.Uri
 import android.os.Environment
 import android.support.v4.view.ViewCompat
 import android.support.v4.view.ViewPager
@@ -20,10 +19,9 @@ import com.stx.xhb.core.utils.ShareUtils
 import com.stx.xhb.enjoylife.R
 import com.stx.xhb.enjoylife.config.GlideApp
 import com.stx.xhb.enjoylife.ui.adapter.PhotoViewPagerAdapter
-import rx.functions.Action1
 import java.io.File
 import java.io.IOException
-import java.util.ArrayList
+import java.util.*
 
 /**
  * @author: xiaohaibin.
@@ -41,10 +39,10 @@ class PhotoViewActivity : BaseActivity() {
     private var photoViewpager: ViewPager? = null
     private var mTvIndicator: TextView? = null
     private var toolbar: Toolbar? = null
+
     companion object {
         val TRANSIT_PIC = "transit_img"
     }
-
 
     override fun getLayoutResource(): Int {
         return R.layout.activity_photo_view
@@ -52,26 +50,26 @@ class PhotoViewActivity : BaseActivity() {
 
     override fun initView() {
         photoViewpager = findViewById(R.id.photo_viewpager)
-        mTvIndicator=findViewById(R.id.tv_indicator)
-        toolbar=findViewById(R.id.toolbar)
+        mTvIndicator = findViewById(R.id.tv_indicator)
+        toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        photoViewpager?.setPageMargin((resources.displayMetrics.density * 15).toInt())
+        photoViewpager?.pageMargin = (resources.displayMetrics.density * 15).toInt()
         ViewCompat.setTransitionName(photoViewpager, PhotoViewActivity.TRANSIT_PIC)
     }
 
     override fun initData() {
         imageList = intent.getStringArrayListExtra("image")
         mPos = intent.getIntExtra("pos", 0)
-        mTvIndicator?.setText((mPos + 1).toString() + "/" + imageList?.size)
+        mTvIndicator?.text = ((mPos + 1).toString() + "/" + imageList?.size)
         setAdapter()
     }
 
     override fun setListener() {
         photoViewpager?.addOnPageChangeListener(object : ViewPager.SimpleOnPageChangeListener() {
             override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
-                saveImgUrl = photoViewpager?.getCurrentItem()?.let { imageList?.get(it) }!!
-                mTvIndicator?.setText((photoViewpager?.getCurrentItem()!! + 1).toString() + "/" + imageList?.size)
+                saveImgUrl = photoViewpager?.currentItem?.let { imageList?.get(it) }!!
+                mTvIndicator?.text = ((photoViewpager?.getCurrentItem()!! + 1).toString() + "/" + imageList?.size)
             }
         })
         toolbar?.setNavigationOnClickListener({ onBackPressed() })
@@ -85,6 +83,7 @@ class PhotoViewActivity : BaseActivity() {
             override fun setOnImageOnClik() {
                 onBackPressed()
             }
+
             override fun setLongClick(url: String) {
                 AlertDialog.Builder(this@PhotoViewActivity)
                         .setMessage(getString(R.string.ask_saving_picture))
@@ -149,17 +148,20 @@ class PhotoViewActivity : BaseActivity() {
     private fun saveImage() {
         val subscribe = RxImage.saveImageAndGetPathObservable(this, saveImgUrl)
                 .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
-                .subscribe(Action1<Uri> {
+                .subscribe({
                     val appDir = File(Environment.getExternalStorageDirectory(), "EnjoyLife")
                     val msg = String.format(getString(R.string.picture_has_save_to),
                             appDir.absolutePath)
                     showToast(msg)
-                }, Action1<Throwable> {
+                }, {
                     showToast(getString(R.string.string_img_save_failed))
                 })
         addSubscription(subscribe)
     }
 
+    /**
+     * 设置壁纸
+     */
     private fun setWallpaper() {
         GlideApp.with(this).asBitmap().load(saveImgUrl).into(object : SimpleTarget<Bitmap>() {
             override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
@@ -171,7 +173,6 @@ class PhotoViewActivity : BaseActivity() {
                     e.printStackTrace()
                     showToast("设置壁纸失败")
                 }
-
             }
         })
     }

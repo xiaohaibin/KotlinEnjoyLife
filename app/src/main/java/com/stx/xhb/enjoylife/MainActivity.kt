@@ -13,7 +13,7 @@ import android.transition.Slide
 import android.view.Gravity
 import com.stx.xhb.core.base.BaseActivity
 import com.stx.xhb.enjoylife.config.Config
-import com.stx.xhb.enjoylife.ui.fragment.TuChongWallPaperFragment
+import com.stx.xhb.enjoylife.ui.fragment.WallPaperFragment
 import com.stx.xhb.enjoylife.ui.fragment.VideoFragment
 import com.stx.xhb.enjoylife.ui.fragment.ZhiHuFragment
 import com.stx.xhb.enjoylife.ui.activity.AboutActivity
@@ -100,7 +100,7 @@ class MainActivity : BaseActivity() {
         when (name) {
             Config.ZHIHU -> mFragments!!.add(ZhiHuFragment())
             Config.VIDEO -> mFragments!!.add(VideoFragment())
-            Config.WALLPAPER -> mFragments!!.add(TuChongWallPaperFragment())
+            Config.WALLPAPER -> mFragments!!.add(WallPaperFragment())
         }
     }
 

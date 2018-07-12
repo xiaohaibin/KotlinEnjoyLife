@@ -27,7 +27,7 @@ import java.util.ArrayList
  * @github:https://github.com/xiaohaibin
  * @describe: 图虫摄影
  */
-class TuChongWallPaperFragment : BaseFragment(), GetWallPaperContract.View, SwipeRefreshLayout.OnRefreshListener {
+class WallPaperFragment : BaseFragment(), GetWallPaperContract.View, SwipeRefreshLayout.OnRefreshListener {
 
     var getWallPaperPresenter: GetWallPaperPresenter? = null
     private var mRvTuChong: RecyclerView? = null
@@ -45,10 +45,10 @@ class TuChongWallPaperFragment : BaseFragment(), GetWallPaperContract.View, Swip
         val layoutManager = RecyclerViewNoBugStaggeredGridLayoutManger(2, StaggeredGridLayoutManager.VERTICAL)
         layoutManager.gapStrategy = StaggeredGridLayoutManager.GAP_HANDLING_NONE
         mSwipeRefreshLayout?.setColorSchemeResources(R.color.colorPrimary, R.color.colorPrimary)
-        mRvTuChong?.setLayoutManager(layoutManager)
+        mRvTuChong?.layoutManager = layoutManager
         mTuChongListAdapter = TuChongWallPaperAdapter(R.layout.list_item_list_tuchong)
         mTuChongListAdapter?.openLoadAnimation()
-        mRvTuChong?.setAdapter(mTuChongListAdapter)
+        mRvTuChong?.adapter = mTuChongListAdapter
     }
 
     override fun initData() {

@@ -18,7 +18,7 @@ interface GetWallPaperContract {
           }
 
          interface View:IBaseView{
-             abstract fun onResponse(feedList: List<Feed>, isMore: Boolean)
+              fun onResponse(feedList: List<Feed>, isMore: Boolean)
          }
 
 

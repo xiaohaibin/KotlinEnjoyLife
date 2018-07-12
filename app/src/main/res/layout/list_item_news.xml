@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    android:id="@+id/news_list_card_view"
+    style="@style/cardStyle"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:foreground="?android:attr/selectableItemBackground"
+    card_view:cardCornerRadius="4dp"
+    card_view:cardUseCompatPadding="true"
+    card_view:cardElevation="4dp">
+
+    <RelativeLayout
+        style="@style/cardRelativeLayoutStyle"
+        tools:ignore="UselessParent">
+
+        <ImageView
+            android:id="@+id/thumbnail_image"
+            style="@style/cardImageViewStyle"
+            android:contentDescription="@string/news_preview_image"/>
+
+        <TextView
+            android:id="@+id/daily_title"
+            style="@style/baseCardTextStyle"/>
+
+        <ImageView
+            android:id="@+id/card_share_overflow"
+            android:contentDescription="@string/share_this_news"
+            style="@style/cardOverflowIconStyle"/>
+    </RelativeLayout>
+</android.support.v7.widget.CardView>

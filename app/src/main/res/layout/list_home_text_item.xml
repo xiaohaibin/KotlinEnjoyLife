@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <com.stx.xhb.enjoylife.ui.widget.CustomTextView
+    <com.stx.xhb.enjoylife.widget.CustomTextView
         android:id="@+id/tv_home_text"
         android:gravity="center"
         android:textColor="@color/colorBlack"
