@@ -54,6 +54,8 @@ class PhotoViewActivity : BaseActivity() {
         photoViewpager = findViewById(R.id.photo_viewpager)
         mTvIndicator=findViewById(R.id.tv_indicator)
         toolbar=findViewById(R.id.toolbar)
+        setSupportActionBar(toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
         photoViewpager?.setPageMargin((resources.displayMetrics.density * 15).toInt())
         ViewCompat.setTransitionName(photoViewpager, PhotoViewActivity.TRANSIT_PIC)
     }
