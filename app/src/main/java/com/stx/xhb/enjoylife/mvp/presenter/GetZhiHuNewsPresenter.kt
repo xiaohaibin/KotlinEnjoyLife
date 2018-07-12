@@ -31,7 +31,16 @@ class GetZhiHuNewsPresenter(mvpView: GetZhiHuNewsContract.View) : BasePresenter<
     }
 
     override fun getNewsBefore(time: String) {
+        request(ApiManager.ApiFactory.creatZhiHuApi().getZhiHuNewsBefore(time), object : LoadTaskCallback<ZhiHuNewsResponse> {
+            override fun onTaskLoaded(data: ZhiHuNewsResponse) {
+                    getView()?.onResponse(data)
+            }
 
+            override fun onDataNotAvailable(msg: String) {
+                    getView()?.showMsg(msg)
+
+            }
+        })
     }
 
     override fun onCreate() {

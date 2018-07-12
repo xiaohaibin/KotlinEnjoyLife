@@ -55,7 +55,7 @@ class ZhiHuFragment : BaseFragment(), GetZhiHuNewsContract.View, SwipeRefreshLay
         onRefresh()
     }
 
-    fun onLoadMore() {
+    private fun onLoadMore() {
         if (!TextUtils.isEmpty(date)) {
             isFirstLoad = false
             zhiHuNewsPresenter?.getNewsBefore(date)
@@ -63,7 +63,7 @@ class ZhiHuFragment : BaseFragment(), GetZhiHuNewsContract.View, SwipeRefreshLay
     }
 
     private fun onLoadComplete() {
-        if ("latest" == date) {
+        if ("latest".equals(date,true)) {
             mNewsAdapter?.setNewData(null)
             mSwipeRefreshLayout?.setRefreshing(false)
         } else {
