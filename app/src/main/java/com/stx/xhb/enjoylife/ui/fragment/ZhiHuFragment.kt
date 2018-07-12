@@ -46,7 +46,7 @@ class ZhiHuFragment : BaseFragment(), GetZhiHuNewsContract.View, SwipeRefreshLay
     }
 
     override fun initData() {
-        GetZhiHuNewsPresenter(this)
+        zhiHuNewsPresenter=GetZhiHuNewsPresenter(this)
     }
 
     override fun onVisible() {

@@ -113,13 +113,15 @@ class NewsDetailsActivity : BaseActivity(), GetNewsContentContract.View {
         return true
     }
 
-    fun start(context: Context, data: String, title: String) {
-        val bundle = Bundle()
-        val intent = Intent(context, NewsDetailsActivity::class.java)
-        bundle.putString("data", data)
-        bundle.putString("title", title)
-        intent.putExtras(bundle)
-        context.startActivity(intent)
+    companion object {
+        fun start(context: Context, data: String, title: String) {
+            val bundle = Bundle()
+            val intent = Intent(context, NewsDetailsActivity::class.java)
+            bundle.putString("data", data)
+            bundle.putString("title", title)
+            intent.putExtras(bundle)
+            context.startActivity(intent)
+        }
     }
 
 
