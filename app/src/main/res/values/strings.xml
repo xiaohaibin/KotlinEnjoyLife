@@ -11,7 +11,7 @@
     <string name="activity_about_title">关于</string>
     <string name="introduce_and_help">应用简介</string>
     <string name="open_source_lis">用到的开源库</string>
-    <string name="open_source_libraries_list">\ncom.android.support:appcompat-v7:25.4.0\ncom.android.support:recyclerview-v7:25.4.0\ncom.android.support:design:25.4.0\ncom.github.bumptech.glide:glide:3.7.0\ncom.shuyu:GSYVideoPlayer:2.0.2\ncom.github.chrisbanes:PhotoView:2.1.3\ncom.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.40\ncom.jaeger.statusbaruitl:library:1.3.6\n...</string>
+    <string name="open_source_libraries_list">\n com.android.support:appcompat-v7:27.1.1\ncom.android.support:recyclerview-v7:27.1.1\ncom.android.support:design:27.1.1\ncom.github.bumptech.glide:glide:4.7.1\ncom.shuyu:GSYVideoPlayer:2.0.2\ncom.github.chrisbanes:PhotoView:2.1.3\ncom.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.40\ncom.jaeger.statusbaruitl:library:1.3.6\n...</string>
     <string name="about_coder">作者简介</string>
     <string name="introduce_about_coder">一个热衷于移动开发、喜欢摄影、旅游和美食的程序猿...</string>
     <string name="share">分享给朋友</string>
