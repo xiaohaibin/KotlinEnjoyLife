@@ -52,7 +52,7 @@ class NewsDetailsActivity : BaseActivity(), GetNewsContentContract.View {
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         toolbar?.setNavigationOnClickListener { finish() }
-        mIvBanner?.setLayoutParams(FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ScreenUtil.getScreenWidth(this) / 2 + 70))
+        mIvBanner?.layoutParams = FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ScreenUtil.getScreenWidth(this) / 2 + 70)
         initWeb()
     }
 

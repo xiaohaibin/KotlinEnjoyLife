@@ -22,12 +22,12 @@ class AboutActivity : BaseActivity() {
     }
 
     override fun initView() {
-        tvVersion = findViewById(R.id.tv_version) as TextView
-        toolbar = findViewById(R.id.toolbar) as Toolbar
-        collapsingToolbar = findViewById(R.id.collapsing_toolbar) as CollapsingToolbarLayout
+        tvVersion = findViewById(R.id.tv_version)
+        toolbar = findViewById(R.id.toolbar)
+        collapsingToolbar = findViewById(R.id.collapsing_toolbar)
 
-        tvVersion!!.setText("Version " + BuildConfig.VERSION_NAME)
-        collapsingToolbar!!.setTitle(getString(R.string.app_name))
+        tvVersion!!.text = ("Version " + BuildConfig.VERSION_NAME)
+        collapsingToolbar!!.title = getString(R.string.app_name)
 
         setSupportActionBar(toolbar)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)

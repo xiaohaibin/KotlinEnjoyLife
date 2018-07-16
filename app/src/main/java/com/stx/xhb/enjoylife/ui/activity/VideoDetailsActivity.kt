@@ -53,12 +53,12 @@ class VideoDetailsActivity : BaseActivity(), View.OnClickListener {
         videoDetailTime = findViewById(R.id.video_detail_time)
         videoDetailDesc = findViewById(R.id.video_detail_desc)
         videoPaly=findViewById(R.id.video_paly)
-        articleShare = findViewById<ImageButton>(R.id.article_share)
+        articleShare = findViewById(R.id.article_share)
         toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.setTitle("视频详情")
-        toolbar?.setNavigationOnClickListener(View.OnClickListener { finish() })
+        supportActionBar?.title = "视频详情"
+        toolbar?.setNavigationOnClickListener({ finish() })
         ViewCompat.setTransitionName(videoDetailIv, VideoDetailsActivity.TRANSIT_PIC)
     }
 

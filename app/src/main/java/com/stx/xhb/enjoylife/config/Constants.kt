@@ -10,6 +10,7 @@ package com.stx.xhb.enjoylife.config
 class Constants {
 
     companion object {
+
         /**
          * 开眼视频推荐接口
          */
@@ -30,6 +31,7 @@ class Constants {
          * 知乎日报API
          */
          var ZHIHU_API = "https://news-at.zhihu.com/api/4/news/"
+
     }
 
 }
