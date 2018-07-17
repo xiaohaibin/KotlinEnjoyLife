@@ -169,12 +169,12 @@ abstract class BaseActivity : RxAppCompatActivity() {
                 .setTitle("警告")
                 .setMessage("需要必要的权限才可以正常使用该功能，您已拒绝获得该权限。\n" +
                         "如果需要重新授权，您可以点击“允许”按钮进入系统设置进行授权")
-                .setNegativeButton("取消", { dialog, i ->
+                .setNegativeButton("取消") { dialog, i ->
                     dialog.dismiss()
-                })
-                .setPositiveButton("确定", { dialogInterface, i ->
+                }
+                .setPositiveButton("确定") { dialogInterface, i ->
                     startAppSettings()
-                })
+                }
                 .show()
     }
 
