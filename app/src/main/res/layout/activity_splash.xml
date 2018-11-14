@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/splash_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <ImageView
-        android:id="@+id/splash_view"
+        android:id="@+id/iv_splash"
         android:layout_width="match_parent"
         android:scaleType="centerCrop"
+        android:src="@drawable/splash_bg"
         android:layout_height="match_parent"/>
 
     <TextView
@@ -16,7 +18,7 @@
         android:layout_marginBottom="30dp"
         android:gravity="center_horizontal"
         android:lineSpacingMultiplier="1.4"
-        android:text="穿越茫茫人海\n寻找属于我们的那一份宁静"
+        android:text="@string/string_splash"
         android:textColor="@color/colorWhite"
         android:textSize="16sp" />
 

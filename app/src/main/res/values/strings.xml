@@ -6,7 +6,7 @@
     <string name="fragment_zhihu_title">知乎日报</string>
     <string name="fragment_video_title">视频推荐</string>
     <string name="fragment_image_title">图虫摄影</string>
-    <string name="fragment_wallpaper_title">图虫摄影</string>
+    <string name="fragment_wallpaper_title">图虫壁纸</string>
     <string name="activity_setting_title">设置</string>
     <string name="activity_about_title">关于</string>
     <string name="introduce_and_help">应用简介</string>
@@ -27,4 +27,5 @@
     <string name="share_to">分享至…</string>
     <string name="share_this_news">分享这个新闻</string>
     <string name="share_image_to">分享图片至...</string>
+    <string name="string_splash">穿越茫茫人海\n寻找属于我们的那一份宁静</string>
 </resources>

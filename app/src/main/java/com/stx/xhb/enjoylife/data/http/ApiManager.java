@@ -6,6 +6,7 @@ import com.stx.xhb.enjoylife.data.entity.TuChongWallPaperResponse;
 import com.stx.xhb.enjoylife.data.entity.VideoResponse;
 import com.stx.xhb.enjoylife.data.entity.ZhiHuNewsContentResponse;
 import com.stx.xhb.enjoylife.data.entity.ZhiHuNewsResponse;
+import com.stx.xhb.enjoylife.data.entity.feed.TuChongFeedResponse;
 
 import java.util.Map;
 
@@ -29,6 +30,14 @@ public interface ApiManager {
     @GET("v2/feed")
     Call<VideoResponse> getVideoList(@QueryMap Map<String, String> param);
 
+    /**
+     * 图虫推荐
+     *
+     * @param param
+     * @return
+     */
+    @GET("feed-app")
+    Call<TuChongFeedResponse> getFeedApp(@QueryMap Map<String, String> param);
 
     /**
      * 图虫壁纸

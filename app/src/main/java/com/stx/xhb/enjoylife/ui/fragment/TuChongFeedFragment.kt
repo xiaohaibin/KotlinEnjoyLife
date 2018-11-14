@@ -3,37 +3,36 @@ package com.stx.xhb.enjoylife.ui.fragment
 import android.content.Intent
 import android.support.v4.app.ActivityCompat
 import android.support.v4.app.ActivityOptionsCompat
-import android.support.v4.content.ContextCompat
 import android.support.v4.widget.SwipeRefreshLayout
-import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.support.v7.widget.StaggeredGridLayoutManager
 import android.view.View
 import android.widget.Toast
 import com.stx.xhb.core.base.BaseFragment
-import com.stx.xhb.core.utils.ScreenUtil
-import com.stx.xhb.core.widget.DividerDecoration
+import com.stx.xhb.core.widget.RecyclerViewNoBugStaggeredGridLayoutManger
 import com.stx.xhb.enjoylife.R
-import com.stx.xhb.enjoylife.data.entity.Feed
-import com.stx.xhb.enjoylife.mvp.contract.GetWallPaperContract
-import com.stx.xhb.enjoylife.mvp.presenter.GetWallPaperPresenter
+import com.stx.xhb.enjoylife.data.entity.feed.FeedListBean
+import com.stx.xhb.enjoylife.mvp.contract.GeTuChongFeedContract
+import com.stx.xhb.enjoylife.mvp.presenter.GetTuChongFeedPresenter
 import com.stx.xhb.enjoylife.ui.activity.PhotoViewActivity
-import com.stx.xhb.enjoylife.ui.adapter.TuChongWallPaperAdapter
+import com.stx.xhb.enjoylife.ui.adapter.TuChongFeedAdapter
 import java.util.*
 
 /**
  * @author: xiaohaibin.
- * @time: 2018/6/29
+ * @time: 2018/11/14
  * @mail:xhb_199409@163.com
  * @github:https://github.com/xiaohaibin
- * @describe: 图虫壁纸
+ * @describe: 图虫摄影
  */
-class WallPaperFragment : BaseFragment(), GetWallPaperContract.View, SwipeRefreshLayout.OnRefreshListener {
+class TuChongFeedFragment:BaseFragment(), GeTuChongFeedContract.View , SwipeRefreshLayout.OnRefreshListener{
 
-    var getWallPaperPresenter: GetWallPaperPresenter? = null
+    var getWallPaperPresenter: GetTuChongFeedPresenter? = null
     private var mRvTuChong: RecyclerView? = null
     private var mSwipeRefreshLayout: SwipeRefreshLayout? = null
     private var page = 1
-    private var mTuChongListAdapter: TuChongWallPaperAdapter? = null
+    private var posId = ""
+    private var mTuChongListAdapter: TuChongFeedAdapter? = null
 
     override fun getLayoutResource(): Int {
         return R.layout.fragment_common
@@ -42,21 +41,21 @@ class WallPaperFragment : BaseFragment(), GetWallPaperContract.View, SwipeRefres
     override fun initView() {
         mRvTuChong = getView(R.id.recly_view)
         mSwipeRefreshLayout = getView(R.id.refresh_layout)
-        val gridLayoutManager = GridLayoutManager(activity, 3);
+        val layoutManager = RecyclerViewNoBugStaggeredGridLayoutManger(2, StaggeredGridLayoutManager.VERTICAL)
+        layoutManager.gapStrategy = StaggeredGridLayoutManager.GAP_HANDLING_NONE
         mSwipeRefreshLayout?.setColorSchemeResources(R.color.colorPrimary, R.color.colorPrimary)
-        mRvTuChong?.layoutManager = gridLayoutManager
-        mRvTuChong?.addItemDecoration(DividerDecoration(ContextCompat.getColor(activity, R.color.colorWhite), ScreenUtil.dp2px(activity, 1)))
-        mTuChongListAdapter = TuChongWallPaperAdapter(R.layout.list_item_wall_paper)
+        mRvTuChong?.layoutManager = layoutManager
+        mTuChongListAdapter = TuChongFeedAdapter(R.layout.list_item_tuchong)
         mTuChongListAdapter?.openLoadAnimation()
         mRvTuChong?.adapter = mTuChongListAdapter
     }
 
     override fun initData() {
-        getWallPaperPresenter = GetWallPaperPresenter(this)
+        getWallPaperPresenter = GetTuChongFeedPresenter(this)
     }
 
     override fun setListener() {
-        mTuChongListAdapter?.setOnImageItemClickListener(object : TuChongWallPaperAdapter.OnImageItemClickListener {
+        mTuChongListAdapter?.setOnImageItemClickListener(object : TuChongFeedAdapter.OnImageItemClickListener {
             override fun setOnImageClick(view: View, imageList: ArrayList<String>) {
                 val intent = Intent(mContext, PhotoViewActivity::class.java)
                 intent.putStringArrayListExtra("image", imageList)
@@ -75,19 +74,15 @@ class WallPaperFragment : BaseFragment(), GetWallPaperContract.View, SwipeRefres
         mSwipeRefreshLayout?.setOnRefreshListener(this)
         mTuChongListAdapter?.setOnLoadMoreListener({
             page++
-            getWallPaperPresenter?.getWallPaper(page)
+            getWallPaperPresenter?.getFeed(page,"loadmore",posId)
         }, mRvTuChong)
     }
 
-    override fun onResponse(feedList: List<Feed>, isMore: Boolean) {
+    override fun onResponse(feedList: List<FeedListBean>, isMore: Boolean) {
         onLoadComplete(page)
         mTuChongListAdapter?.setEnableLoadMore(isMore)
-        for (i in feedList.indices) {
-            val feedListBean = feedList[i]
-            if ("post" == feedListBean.type) {
-                mTuChongListAdapter?.addData(feedListBean)
-            }
-        }
+        posId = feedList[feedList.size - 1].post_id.toString()
+        mTuChongListAdapter?.addData(feedList)
     }
 
     override fun showLoading() {
@@ -110,7 +105,7 @@ class WallPaperFragment : BaseFragment(), GetWallPaperContract.View, SwipeRefres
 
     override fun onRefresh() {
         page = 1
-        getWallPaperPresenter?.getWallPaper(page)
+        getWallPaperPresenter?.getFeed(page,"refresh",posId)
     }
 
     override fun onDestroy() {

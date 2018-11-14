@@ -17,6 +17,7 @@ import com.stx.xhb.enjoylife.ui.fragment.WallPaperFragment
 import com.stx.xhb.enjoylife.ui.fragment.VideoFragment
 import com.stx.xhb.enjoylife.ui.fragment.ZhiHuFragment
 import com.stx.xhb.enjoylife.ui.activity.AboutActivity
+import com.stx.xhb.enjoylife.ui.fragment.TuChongFeedFragment
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -101,6 +102,7 @@ class MainActivity : BaseActivity() {
             Config.ZHIHU -> mFragments!!.add(ZhiHuFragment())
             Config.VIDEO -> mFragments!!.add(VideoFragment())
             Config.WALLPAPER -> mFragments!!.add(WallPaperFragment())
+            Config.IMAGE -> mFragments!!.add(TuChongFeedFragment())
         }
     }
 

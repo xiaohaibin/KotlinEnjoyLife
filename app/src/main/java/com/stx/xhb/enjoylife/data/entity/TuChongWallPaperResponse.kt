@@ -1,5 +1,6 @@
 package com.stx.xhb.enjoylife.data.entity
 
+
 /**
  * @author: xiaohaibin.
  * @time: 2018/6/26

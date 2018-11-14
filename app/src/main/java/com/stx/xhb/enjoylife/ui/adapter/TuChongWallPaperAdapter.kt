@@ -2,15 +2,16 @@ package com.stx.xhb.enjoylife.ui.adapter
 
 import android.support.v4.view.ViewCompat
 import android.view.View
-import android.widget.TextView
+import android.widget.ImageView
+import android.widget.LinearLayout
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
-import com.stx.xhb.core.widget.RatioImageView
+import com.stx.xhb.core.utils.ScreenUtil
 import com.stx.xhb.enjoylife.R
 import com.stx.xhb.enjoylife.config.GlideApp
 import com.stx.xhb.enjoylife.data.entity.Feed
-import java.util.ArrayList
+import java.util.*
 
 /**
  * @author: xiaohaibin.
@@ -28,16 +29,12 @@ class TuChongWallPaperAdapter(layoutResId: Int) : BaseQuickAdapter<Feed, BaseVie
         if ("video" == feedListBeanEntry?.type) {
             return
         }
-        val imageView = holder?.getView(R.id.iv_img) as RatioImageView
-        imageView.setOriginalSize(50, 50)
-        val limit = 48
-        val text = if (feedListBeanEntry?.title?.length!! > limit)
-            feedListBeanEntry.title.substring(0, limit) + "..."
-        else
-            feedListBeanEntry.title
-        (holder.getView(R.id.tv_title) as TextView).setText(text)
-
-        val images = feedListBeanEntry.images
+        val imageView = holder?.getView(R.id.iv_img) as ImageView
+        val layoutParams = LinearLayout.LayoutParams(
+                ScreenUtil.getScreenWidth(imageView.context) / 3, ScreenUtil.getScreenWidth(imageView.context) / 3 * 2)
+        layoutParams.setMargins(2, 2, 2, 2)
+        imageView.layoutParams = layoutParams
+        val images = feedListBeanEntry?.images
         if (images == null || images.isEmpty()) {
             return
         }
@@ -47,7 +44,7 @@ class TuChongWallPaperAdapter(layoutResId: Int) : BaseQuickAdapter<Feed, BaseVie
             GlideApp.with(mContext)
                     .load(url)
                     .centerCrop()
-                    .transition(DrawableTransitionOptions.withCrossFade())
+                    .transition(DrawableTransitionOptions.withCrossFade(500))
                     .into(imageView)
                     .getSize { width, height ->
                         if (!holder.itemView.isShown()) {
