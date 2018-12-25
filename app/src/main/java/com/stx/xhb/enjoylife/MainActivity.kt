@@ -11,15 +11,19 @@ import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.widget.Toolbar
 import android.transition.Slide
 import android.view.Gravity
+import android.view.KeyEvent
+import android.view.View
 import com.stx.xhb.core.base.BaseActivity
+import com.stx.xhb.core.utils.SnackbarUtil
 import com.stx.xhb.enjoylife.config.Config
-import com.stx.xhb.enjoylife.ui.fragment.WallPaperFragment
-import com.stx.xhb.enjoylife.ui.fragment.VideoFragment
-import com.stx.xhb.enjoylife.ui.fragment.ZhiHuFragment
 import com.stx.xhb.enjoylife.ui.activity.AboutActivity
 import com.stx.xhb.enjoylife.ui.fragment.TuChongFeedFragment
+import com.stx.xhb.enjoylife.ui.fragment.VideoFragment
+import com.stx.xhb.enjoylife.ui.fragment.WallPaperFragment
+import com.stx.xhb.enjoylife.ui.fragment.ZhiHuFragment
 import java.util.*
 import kotlin.collections.ArrayList
+
 
 class MainActivity : BaseActivity() {
 
@@ -30,6 +34,7 @@ class MainActivity : BaseActivity() {
     var mFragments: ArrayList<android.app.Fragment>? = null
     var mCurrentFragment: android.app.Fragment? = null
     var mTitles: ArrayList<Int>? = null
+    var exitTime: Long = 0
 
     override fun getLayoutResource(): Int {
         return R.layout.activity_main
@@ -125,5 +130,22 @@ class MainActivity : BaseActivity() {
             val actionBar = supportActionBar!!
             actionBar.setTitle(title)
         }
+    }
+
+    override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
+            val drawer = findViewById<View>(R.id.drawer_layout) as DrawerLayout
+            if (drawer.isDrawerOpen(GravityCompat.START)) {
+                drawer.closeDrawer(GravityCompat.START)
+            } else if (System.currentTimeMillis() - exitTime > 2000) {
+                SnackbarUtil.ShortSnackbar(ctlMain, "再按一次退出乐享", resources.getColor(R.color.colorWhite), resources.getColor(R.color.colorGreen)).show()
+                exitTime = System.currentTimeMillis()
+            } else {
+                finish()
+                System.exit(0)
+            }
+            return true
+        }
+        return super.onKeyDown(keyCode, event)
     }
 }
