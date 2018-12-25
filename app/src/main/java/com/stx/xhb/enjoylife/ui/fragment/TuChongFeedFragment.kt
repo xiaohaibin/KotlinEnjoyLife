@@ -43,6 +43,7 @@ class TuChongFeedFragment:BaseFragment(), GeTuChongFeedContract.View , SwipeRefr
         mSwipeRefreshLayout = getView(R.id.refresh_layout)
         val layoutManager = RecyclerViewNoBugStaggeredGridLayoutManger(2, StaggeredGridLayoutManager.VERTICAL)
         layoutManager.gapStrategy = StaggeredGridLayoutManager.GAP_HANDLING_NONE
+        mRvTuChong?.itemAnimator=null
         mSwipeRefreshLayout?.setColorSchemeResources(R.color.colorPrimary, R.color.colorPrimary)
         mRvTuChong?.layoutManager = layoutManager
         mTuChongListAdapter = TuChongFeedAdapter(R.layout.list_item_tuchong)
