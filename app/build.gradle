@@ -6,11 +6,11 @@ apply plugin: 'kotlin-kapt'
 android {
     compileSdkVersion 27
     defaultConfig {
-        applicationId "com.stx.xhb.kotlinenjoylife"
+        applicationId "com.stx.xhb.enjoylife"
         minSdkVersion 16
         targetSdkVersion 27
-        versionCode 1
-        versionName "1.0"
+        versionCode 5
+        versionName "1.5"
         ndk {
             //设置支持的SO库架构
             abiFilters 'armeabi', 'armeabi-v7a','x86'
