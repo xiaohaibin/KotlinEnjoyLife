@@ -17,6 +17,7 @@ import com.stx.xhb.enjoylife.data.entity.Feed
 import com.stx.xhb.enjoylife.mvp.contract.GetWallPaperContract
 import com.stx.xhb.enjoylife.mvp.presenter.GetWallPaperPresenter
 import com.stx.xhb.enjoylife.ui.activity.PhotoViewActivity
+import com.stx.xhb.enjoylife.ui.activity.WallPagerActivity
 import com.stx.xhb.enjoylife.ui.adapter.TuChongWallPaperAdapter
 import java.util.*
 
@@ -58,11 +59,11 @@ class WallPaperFragment : BaseFragment(), GetWallPaperContract.View, SwipeRefres
     override fun setListener() {
         mTuChongListAdapter?.setOnImageItemClickListener(object : TuChongWallPaperAdapter.OnImageItemClickListener {
             override fun setOnImageClick(view: View, imageList: ArrayList<String>) {
-                val intent = Intent(mContext, PhotoViewActivity::class.java)
+                val intent = Intent(mContext, WallPagerActivity::class.java)
                 intent.putStringArrayListExtra("image", imageList)
                 intent.putExtra("pos", 0)
                 val optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(
-                        activity, view, PhotoViewActivity.TRANSIT_PIC)
+                        activity, view, WallPagerActivity.TRANSIT_PIC)
                 try {
                     ActivityCompat.startActivity(activity, intent, optionsCompat.toBundle())
                 } catch (e: IllegalArgumentException) {

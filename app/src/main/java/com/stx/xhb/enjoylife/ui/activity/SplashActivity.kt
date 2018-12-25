@@ -20,7 +20,6 @@ import com.stx.xhb.enjoylife.config.SpConstants
 import com.stx.xhb.enjoylife.data.entity.SplashImgResponse
 import com.stx.xhb.enjoylife.mvp.contract.GetWelconmeImgConTract
 import com.stx.xhb.enjoylife.mvp.presenter.GetSplashImgPresenter
-import java.util.*
 
 /**
  * @author: xiaohaibin.
@@ -117,10 +116,7 @@ class SplashActivity : BaseActivity(), GetWelconmeImgConTract.View {
         val data = SPUtils.getString(this, SpConstants.SP_WELCOME_IMG)
         if (!TextUtils.isEmpty(data)) {
             val imgResponse = GsonUtil.newGson().fromJson(data, SplashImgResponse::class.java)
-            val min = 0
-            val max = imgResponse.app.size - 1
-            val index = Random().nextInt(max) % (max - min + 1) + min
-            return imgResponse.app.get(index).image_url
+            return imgResponse.app.get(0).image_url
         }
         return ""
     }

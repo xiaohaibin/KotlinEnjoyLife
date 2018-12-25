@@ -57,6 +57,8 @@
         <activity android:name=".ui.activity.VideoPlayActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="landscape"/>
+        <activity android:name=".ui.activity.WallPagerActivity"
+            android:screenOrientation="portrait"/>
 
         <!-- 友盟appid设置 -->
         <meta-data

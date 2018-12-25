@@ -24,9 +24,9 @@ import java.util.*
  * @time: 2018/7/11
  * @mail:xhb_199409@163.com
  * @github:https://github.com/xiaohaibin
- * @describe:PhotoViewPagerAdapter
+ * @describe:WallPaperPagerAdapter
  */
-class PhotoViewPagerAdapter(context: Context, imageList: ArrayList<String>):PagerAdapter() {
+class WallPaperPagerAdapter(context: Context, imageList: ArrayList<String>):PagerAdapter() {
 
     private val context: Context
     private val imageList: ArrayList<String>
@@ -46,10 +46,9 @@ class PhotoViewPagerAdapter(context: Context, imageList: ArrayList<String>):Page
     }
 
     override fun instantiateItem(container: ViewGroup, position: Int): Any {
-        val convertView = View.inflate(context, R.layout.item_photoview, null)
-        val photoView = convertView.findViewById<PhotoView>(R.id.photo_view)
+        val convertView = View.inflate(context, R.layout.item_wallpaper, null)
+        val photoView = convertView.findViewById<ImageView>(R.id.photo_view)
         val progressBar = convertView.findViewById<ProgressBar>(R.id.progress_view)
-        photoView.setScaleType(ImageView.ScaleType.FIT_CENTER)
         val imgUrl = imageList[position]
         GlideApp.with(context)
                 .load(imgUrl)
@@ -68,11 +67,11 @@ class PhotoViewPagerAdapter(context: Context, imageList: ArrayList<String>):Page
                 .diskCacheStrategy(DiskCacheStrategy.NONE)
                 .into(photoView)
 
-        photoView.setOnViewTapListener(OnViewTapListener { view, v, v1 ->
-            if (mImageLayoutListener != null) {
-                mImageLayoutListener!!.setOnImageOnClik()
-            }
-        })
+       photoView.setOnClickListener(View.OnClickListener {
+           if (mImageLayoutListener != null) {
+               mImageLayoutListener!!.setOnImageOnClik()
+           }
+       })
 
         photoView.setOnLongClickListener(View.OnLongClickListener {
             if (mImageLayoutListener != null) {
