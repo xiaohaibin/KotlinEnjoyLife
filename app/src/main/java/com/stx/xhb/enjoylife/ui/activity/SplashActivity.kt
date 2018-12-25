@@ -4,16 +4,23 @@ import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.animation.ObjectAnimator
 import android.content.Intent
-import android.os.Handler
+import android.text.TextUtils
 import android.view.WindowManager
-import android.view.animation.AlphaAnimation
 import android.widget.FrameLayout
 import android.widget.ImageView
+import android.widget.Toast
 import com.jaeger.library.StatusBarUtil
 import com.stx.xhb.core.base.BaseActivity
+import com.stx.xhb.core.utils.GsonUtil
+import com.stx.xhb.core.utils.SPUtils
 import com.stx.xhb.enjoylife.MainActivity
 import com.stx.xhb.enjoylife.R
 import com.stx.xhb.enjoylife.config.GlideApp
+import com.stx.xhb.enjoylife.config.SpConstants
+import com.stx.xhb.enjoylife.data.entity.SplashImgResponse
+import com.stx.xhb.enjoylife.mvp.contract.GetWelconmeImgConTract
+import com.stx.xhb.enjoylife.mvp.presenter.GetSplashImgPresenter
+import java.util.*
 
 /**
  * @author: xiaohaibin.
@@ -22,11 +29,12 @@ import com.stx.xhb.enjoylife.config.GlideApp
  * @github:https://github.com/xiaohaibin
  * @describe:
  */
-class SplashActivity : BaseActivity() {
+class SplashActivity : BaseActivity(), GetWelconmeImgConTract.View {
 
     /**动画时间 1000ms */
     private val ANIMATOR_DURATION = 2000
     private var alphaAnimIn: ObjectAnimator? = null
+    private var mSplashImgPresenter: GetSplashImgPresenter? = null
 
     override fun getLayoutResource(): Int {
         return R.layout.activity_splash
@@ -35,12 +43,15 @@ class SplashActivity : BaseActivity() {
     override fun initView() {
         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
         //设置状态栏透明
-        StatusBarUtil.setTranslucent(this, 0)
+        StatusBarUtil.setTransparent(this)
         val ivSplash = findViewById<ImageView>(R.id.iv_splash)
         val splashView = findViewById<FrameLayout>(R.id.splash_view)
-//        GlideApp.with(this).load("https://pic1.zhimg.com/v2-9639852750175df1b80ed995729e64e8.jpg").dontAnimate().into(ivSplash)
+        if (TextUtils.isEmpty(getWelcomeImg())) {
+            GlideApp.with(this).load(R.drawable.splash_bg).dontAnimate().into(ivSplash)
+        } else {
+            GlideApp.with(this).load(getWelcomeImg()).dontAnimate().into(ivSplash)
+        }
         //设置动画
-
         alphaAnimIn = ObjectAnimator.ofFloat(splashView, "alpha", 0f, 1f)
         alphaAnimIn?.setDuration(ANIMATOR_DURATION.toLong())
         alphaAnimIn?.start()
@@ -50,7 +61,6 @@ class SplashActivity : BaseActivity() {
                 jumpToMain()
             }
         })
-
     }
 
     private fun jumpToMain() {
@@ -72,8 +82,46 @@ class SplashActivity : BaseActivity() {
     }
 
     override fun initData() {
+        mSplashImgPresenter = GetSplashImgPresenter(this)
+        val widthPixels = resources.displayMetrics.widthPixels
+        val heightPixels = resources.displayMetrics.heightPixels
+        mSplashImgPresenter?.getSplashImg(widthPixels.toString() + "*" + heightPixels.toString(), widthPixels, heightPixels)
     }
 
     override fun setListener() {
+
+    }
+
+    override fun getSplashImgSuccess(data: SplashImgResponse) {
+        SPUtils.putString(this, SpConstants.SP_WELCOME_IMG, GsonUtil.newGson().toJson(data, SplashImgResponse::class.java))
+    }
+
+
+    override fun getSplashImgFailed(msg: String) {
+        showMsg(msg)
+    }
+
+    override fun showLoading() {
+
+    }
+
+    override fun hideLoading() {
+
+    }
+
+    override fun showMsg(msg: String) {
+        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
+    }
+
+    fun getWelcomeImg(): String? {
+        val data = SPUtils.getString(this, SpConstants.SP_WELCOME_IMG)
+        if (!TextUtils.isEmpty(data)) {
+            val imgResponse = GsonUtil.newGson().fromJson(data, SplashImgResponse::class.java)
+            val min = 0
+            val max = imgResponse.app.size - 1
+            val index = Random().nextInt(max) % (max - min + 1) + min
+            return imgResponse.app.get(index).image_url
+        }
+        return ""
     }
 }

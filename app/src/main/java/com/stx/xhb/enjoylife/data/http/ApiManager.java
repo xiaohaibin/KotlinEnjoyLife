@@ -2,6 +2,7 @@ package com.stx.xhb.enjoylife.data.http;
 
 import com.stx.xhb.core.api.RestApi;
 import com.stx.xhb.enjoylife.config.Constants;
+import com.stx.xhb.enjoylife.data.entity.SplashImgResponse;
 import com.stx.xhb.enjoylife.data.entity.TuChongWallPaperResponse;
 import com.stx.xhb.enjoylife.data.entity.VideoResponse;
 import com.stx.xhb.enjoylife.data.entity.ZhiHuNewsContentResponse;
@@ -47,6 +48,14 @@ public interface ApiManager {
      */
     @GET("2/wall-paper/app")
     Call<TuChongWallPaperResponse> getWallPaper(@Query("page") int page);
+
+
+    /**
+     * 获取启动图片
+     * @return
+     */
+    @GET("2/welcome-images")
+    Call<SplashImgResponse> getSplashImg(@Query("resolution") String resolution, @Query("width") int width, @Query("height") int height);
 
     /**
      * 获取知乎日报

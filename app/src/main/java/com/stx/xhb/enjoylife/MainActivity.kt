@@ -44,12 +44,10 @@ class MainActivity : BaseActivity() {
         setSupportActionBar(toolbar)
         ctlMain!!.fitsSystemWindows = false
         toolbar?.let { setToolBar(it, true, false, drawerLayout) }
-        if (Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT) {
-            val toggle = ActionBarDrawerToggle(
-                    this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
-            drawerLayout!!.addDrawerListener(toggle)
-            toggle.syncState()
-        }
+        val toggle = ActionBarDrawerToggle(
+                this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
+        drawerLayout!!.addDrawerListener(toggle)
+        toggle.syncState()
         initMenu()
     }
 
