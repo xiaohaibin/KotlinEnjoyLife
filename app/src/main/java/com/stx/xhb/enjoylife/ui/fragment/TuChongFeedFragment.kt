@@ -25,7 +25,7 @@ import java.util.*
  * @github:https://github.com/xiaohaibin
  * @describe: 图虫摄影
  */
-class TuChongFeedFragment:BaseFragment(), GeTuChongFeedContract.View , SwipeRefreshLayout.OnRefreshListener{
+class TuChongFeedFragment : BaseFragment(), GeTuChongFeedContract.View, SwipeRefreshLayout.OnRefreshListener {
 
     var getWallPaperPresenter: GetTuChongFeedPresenter? = null
     private var mRvTuChong: RecyclerView? = null
@@ -43,7 +43,7 @@ class TuChongFeedFragment:BaseFragment(), GeTuChongFeedContract.View , SwipeRefr
         mSwipeRefreshLayout = getView(R.id.refresh_layout)
         val layoutManager = RecyclerViewNoBugStaggeredGridLayoutManger(2, StaggeredGridLayoutManager.VERTICAL)
         layoutManager.gapStrategy = StaggeredGridLayoutManager.GAP_HANDLING_NONE
-        mRvTuChong?.itemAnimator=null
+        mRvTuChong?.itemAnimator = null
         mSwipeRefreshLayout?.setColorSchemeResources(R.color.colorPrimary, R.color.colorPrimary)
         mRvTuChong?.layoutManager = layoutManager
         mTuChongListAdapter = TuChongFeedAdapter(R.layout.list_item_tuchong)
@@ -75,7 +75,7 @@ class TuChongFeedFragment:BaseFragment(), GeTuChongFeedContract.View , SwipeRefr
         mSwipeRefreshLayout?.setOnRefreshListener(this)
         mTuChongListAdapter?.setOnLoadMoreListener({
             page++
-            getWallPaperPresenter?.getFeed(page,"loadmore",posId)
+            getWallPaperPresenter?.getFeed(page, "loadmore", posId)
         }, mRvTuChong)
     }
 
@@ -83,7 +83,11 @@ class TuChongFeedFragment:BaseFragment(), GeTuChongFeedContract.View , SwipeRefr
         onLoadComplete(page)
         mTuChongListAdapter?.setEnableLoadMore(isMore)
         posId = feedList[feedList.size - 1].post_id.toString()
-        mTuChongListAdapter?.addData(feedList)
+        if (page == 1) {
+            mTuChongListAdapter?.setNewData(feedList)
+        } else {
+            mTuChongListAdapter?.addData(feedList)
+        }
     }
 
     override fun showLoading() {
@@ -106,7 +110,7 @@ class TuChongFeedFragment:BaseFragment(), GeTuChongFeedContract.View , SwipeRefr
 
     override fun onRefresh() {
         page = 1
-        getWallPaperPresenter?.getFeed(page,"refresh",posId)
+        getWallPaperPresenter?.getFeed(page, "refresh", posId)
     }
 
     override fun onDestroy() {
@@ -116,7 +120,6 @@ class TuChongFeedFragment:BaseFragment(), GeTuChongFeedContract.View , SwipeRefr
 
     private fun onLoadComplete(page: Int) {
         if (page == 1) {
-            mTuChongListAdapter?.setNewData(null)
             mSwipeRefreshLayout?.setRefreshing(false)
         } else {
             mTuChongListAdapter?.loadMoreComplete()
