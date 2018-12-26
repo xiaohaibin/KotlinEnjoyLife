@@ -46,7 +46,7 @@ public interface ApiManager {
      * @param page
      * @return
      */
-    @GET("2/wall-paper/app")
+    @GET("3/wall-paper/app")
     Call<TuChongWallPaperResponse> getWallPaper(@Query("page") int page);
 
 
