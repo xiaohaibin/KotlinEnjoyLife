@@ -15,7 +15,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RestApi {
 
-    private static final String TAG = "===Enjoy";
+    private static final String TAG = "===http==";
     private static RestApi mInstance;
     public static boolean isDebug = false;
 

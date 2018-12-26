@@ -19,6 +19,8 @@ import com.stx.xhb.core.utils.ShareUtils
 import com.stx.xhb.enjoylife.R
 import com.stx.xhb.enjoylife.config.GlideApp
 import com.stx.xhb.enjoylife.ui.adapter.PhotoViewPagerAdapter
+import rx.android.schedulers.AndroidSchedulers
+import rx.functions.Action1
 import java.io.File
 import java.io.IOException
 import java.util.*
@@ -163,17 +165,13 @@ class PhotoViewActivity : BaseActivity() {
      * 设置壁纸
      */
     private fun setWallpaper() {
-        GlideApp.with(this).asBitmap().load(saveImgUrl).into(object : SimpleTarget<Bitmap>() {
-            override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
-                val manager = WallpaperManager.getInstance(this@PhotoViewActivity)
-                try {
-                    manager.setBitmap(resource)
-                    showToast("设置壁纸成功")
-                } catch (e: IOException) {
-                    e.printStackTrace()
-                    showToast("设置壁纸失败")
-                }
-            }
-        })
+        val subscribe = RxImage.setWallPaper(this, saveImgUrl)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    showToast("壁纸设置成功")
+                }, {
+                    showToast("壁纸设置失败")
+                })
+        addSubscription(subscribe)
     }
 }

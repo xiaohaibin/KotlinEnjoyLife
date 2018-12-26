@@ -1,27 +1,89 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorBlack"
     android:orientation="vertical"
     tools:context="com.stx.xhb.enjoylife.ui.activity.PhotoViewActivity">
 
-    <include layout="@layout/toolbar_layout" />
-
-    <FrameLayout
+    <android.support.v4.view.ViewPager
+        android:id="@+id/photo_viewpager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent" />
 
-        <android.support.v4.view.ViewPager
-            android:id="@+id/photo_viewpager"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#1A000000" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:paddingTop="30dp">
 
         <TextView
+            android:id="@+id/tv_time"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:text="7:30"
+            android:textColor="@color/colorWhite"
+            android:textSize="60dp" />
 
-    </FrameLayout>
+        <TextView
+            android:id="@+id/tv_current_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="6月18日 星期一"
+            android:textColor="@color/colorWhite"
+            android:textSize="16dp" />
 
-</LinearLayout>
+        <TextView
+            android:id="@+id/tv_lunar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_10"
+            android:text="戊戌年 五月初五"
+            android:textColor="@color/colorWhite"
+            android:textSize="16dp" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/btn_save"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:textColor="@color/colorWhite"
+        android:gravity="center"
+        android:textSize="15dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="100dp"
+        android:background="@drawable/selector_btn_save"
+        android:text="保存图片"/>
+
+    <TextView
+        android:id="@+id/btn_set_wallpaper"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:textColor="@color/colorWhite"
+        android:gravity="center"
+        android:textSize="15dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="@dimen/dp_40"
+        android:background="@drawable/selector_btn_save"
+        android:text="设为壁纸"/>
+
+    <ImageView
+        android:id="@+id/iv_close"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_gravity="right"
+        android:layout_margin="20dp"
+        android:src="@drawable/ic_close" />
+
+
+</FrameLayout>

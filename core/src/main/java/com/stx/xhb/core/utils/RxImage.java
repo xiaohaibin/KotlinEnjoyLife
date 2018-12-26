@@ -19,12 +19,13 @@
 
 package com.stx.xhb.core.utils;
 
+import android.annotation.SuppressLint;
+import android.app.WallpaperManager;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Environment;
-import android.util.Log;
 
 import com.squareup.picasso.Picasso;
 
@@ -38,7 +39,7 @@ import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 /**
- *基于Rxjava Picasso的图片保存工具类
+ * 基于Rxjava Picasso的图片保存工具类
  */
 public class RxImage {
 
@@ -66,7 +67,6 @@ public class RxImage {
                     appDir.mkdir();
                 }
                 String fileName = System.currentTimeMillis() + ".jpg";
-                Log.i("====>picture",fileName);
                 File file = new File(appDir, fileName);
                 try {
                     FileOutputStream outputStream = new FileOutputStream(file);
@@ -83,6 +83,40 @@ public class RxImage {
                 Intent scannerIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, uri);
                 context.sendBroadcast(scannerIntent);
                 return Observable.just(uri);
+            }
+        }).subscribeOn(Schedulers.io());
+    }
+
+
+    public static Observable<Boolean> setWallPaper(final Context context, final String url) {
+        return Observable.create(new Observable.OnSubscribe<Bitmap>() {
+            @Override
+            public void call(Subscriber<? super Bitmap> subscriber) {
+                Bitmap bitmap = null;
+                try {
+                    bitmap = Picasso.with(context).load(url).get();
+                } catch (IOException e) {
+                    subscriber.onError(e);
+                }
+                if (bitmap == null) {
+                    subscriber.onError(new Exception("壁纸设置失败"));
+                }
+                subscriber.onNext(bitmap);
+                subscriber.onCompleted();
+            }
+        }).flatMap(new Func1<Bitmap, Observable<Boolean>>() {
+            @SuppressLint("MissingPermission")
+            @Override
+            public Observable<Boolean> call(Bitmap bitmap) {
+                boolean isSuccess = false;
+                WallpaperManager manager = WallpaperManager.getInstance(context);
+                try {
+                    manager.setBitmap(bitmap);
+                    isSuccess = true;
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                return Observable.just(isSuccess);
             }
         }).subscribeOn(Schedulers.io());
     }

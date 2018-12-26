@@ -14,6 +14,7 @@ import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.AlertDialog
 import android.support.v7.widget.Toolbar
 import android.util.Log
+import android.view.View
 import android.view.Window
 import android.widget.Toast
 import com.jaeger.library.StatusBarUtil
@@ -22,6 +23,11 @@ import com.stx.xhb.core.rx.RxAppCompatActivity
 import rx.Subscription
 import rx.subscriptions.CompositeSubscription
 import java.util.*
+import android.view.View.SYSTEM_UI_FLAG_FULLSCREEN
+import android.view.View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+import android.view.View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+
+
 
 /**
  * @author: xiaohaibin.
@@ -234,6 +240,23 @@ abstract class BaseActivity : RxAppCompatActivity() {
 
     fun showToast(message: CharSequence, duration: Int = Toast.LENGTH_SHORT){
         Toast.makeText(this, message, duration).show()
+    }
+
+    /**
+     * 隐藏虚拟按键，并且全屏
+     */
+    protected fun hideBottomUIMenu() {
+        //隐藏虚拟按键，并且全屏
+        if (Build.VERSION.SDK_INT > 11 && Build.VERSION.SDK_INT < 19) { // lower api
+            val v = this.window.decorView
+            v.systemUiVisibility = View.GONE
+        } else if (Build.VERSION.SDK_INT >= 19) {
+            //for new api versions.
+            val decorView = window.decorView
+            val uiOptions = (View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                    or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY or View.SYSTEM_UI_FLAG_FULLSCREEN)
+            decorView.systemUiVisibility = uiOptions
+        }
     }
 
 }

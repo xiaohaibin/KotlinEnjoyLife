@@ -116,7 +116,9 @@ class SplashActivity : BaseActivity(), GetWelconmeImgConTract.View {
         val data = SPUtils.getString(this, SpConstants.SP_WELCOME_IMG)
         if (!TextUtils.isEmpty(data)) {
             val imgResponse = GsonUtil.newGson().fromJson(data, SplashImgResponse::class.java)
-            return imgResponse.app.get(0).image_url
+            if (imgResponse.app.isNotEmpty() && !TextUtils.isEmpty(imgResponse.app.get(0).title)) {
+                return imgResponse.app.get(0).image_url
+            }
         }
         return ""
     }

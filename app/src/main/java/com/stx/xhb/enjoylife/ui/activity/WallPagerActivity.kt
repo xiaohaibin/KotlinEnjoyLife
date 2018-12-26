@@ -1,27 +1,24 @@
 package com.stx.xhb.enjoylife.ui.activity
 
 import android.Manifest
-import android.app.WallpaperManager
-import android.graphics.Bitmap
+import android.graphics.Color
 import android.os.Environment
 import android.support.v4.view.ViewCompat
 import android.support.v4.view.ViewPager
-import android.support.v7.app.AlertDialog
-import android.support.v7.widget.Toolbar
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
+import android.widget.ImageView
 import android.widget.TextView
-import com.bumptech.glide.request.target.SimpleTarget
-import com.bumptech.glide.request.transition.Transition
+import com.jaeger.library.StatusBarUtil
 import com.stx.xhb.core.base.BaseActivity
+import com.stx.xhb.core.utils.DateUtils
 import com.stx.xhb.core.utils.RxImage
 import com.stx.xhb.core.utils.ShareUtils
 import com.stx.xhb.enjoylife.R
-import com.stx.xhb.enjoylife.config.GlideApp
-import com.stx.xhb.enjoylife.ui.adapter.PhotoViewPagerAdapter
 import com.stx.xhb.enjoylife.ui.adapter.WallPaperPagerAdapter
+import rx.android.schedulers.AndroidSchedulers
 import java.io.File
-import java.io.IOException
 import java.util.*
 
 /**
@@ -38,7 +35,6 @@ class WallPagerActivity : BaseActivity() {
     private var mPos: Int = 0
     private var saveImgUrl = ""
     private var photoViewpager: ViewPager? = null
-    private var toolbar: Toolbar? = null
 
     companion object {
         val TRANSIT_PIC = "transit_img"
@@ -50,11 +46,22 @@ class WallPagerActivity : BaseActivity() {
 
     override fun initView() {
         photoViewpager = findViewById(R.id.photo_viewpager)
-        toolbar = findViewById(R.id.toolbar)
-        setSupportActionBar(toolbar)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        findViewById<TextView>(R.id.tv_time).text = DateUtils.getCurrentHourAndMinute()
+        findViewById<TextView>(R.id.tv_current_date).text = DateUtils.getCurrentMouthDayWeek()
+        findViewById<TextView>(R.id.tv_lunar).text = DateUtils.getLunarYearMonthDay()
+        findViewById<TextView>(R.id.btn_save).setOnClickListener(View.OnClickListener {
+            saveImage()
+        })
+        findViewById<TextView>(R.id.btn_set_wallpaper).setOnClickListener(View.OnClickListener {
+            setWallpaper()
+        })
+        findViewById<ImageView>(R.id.iv_close).setOnClickListener(View.OnClickListener {
+           onBackPressed()
+        })
         photoViewpager?.pageMargin = (resources.displayMetrics.density * 15).toInt()
         ViewCompat.setTransitionName(photoViewpager, PhotoViewActivity.TRANSIT_PIC)
+        StatusBarUtil.setColor(this, Color.BLACK)
+        hideBottomUIMenu()
     }
 
     override fun initData() {
@@ -69,7 +76,6 @@ class WallPagerActivity : BaseActivity() {
                 saveImgUrl = photoViewpager?.currentItem?.let { imageList?.get(it) }!!
             }
         })
-        toolbar?.setNavigationOnClickListener({ onBackPressed() })
     }
 
     private fun setAdapter() {
@@ -78,7 +84,7 @@ class WallPagerActivity : BaseActivity() {
         photoViewpager?.currentItem = mPos
         adapter?.setOnClickListener(object : WallPaperPagerAdapter.onImageLayoutListener {
             override fun setOnImageOnClik() {
-                onBackPressed()
+
             }
 
             override fun setLongClick(url: String) {
@@ -145,21 +151,18 @@ class WallPagerActivity : BaseActivity() {
         addSubscription(subscribe)
     }
 
+
     /**
      * 设置壁纸
      */
     private fun setWallpaper() {
-        GlideApp.with(this).asBitmap().load(saveImgUrl).into(object : SimpleTarget<Bitmap>() {
-            override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
-                val manager = WallpaperManager.getInstance(this@WallPagerActivity)
-                try {
-                    manager.setBitmap(resource)
-                    showToast("设置壁纸成功")
-                } catch (e: IOException) {
-                    e.printStackTrace()
-                    showToast("设置壁纸失败")
-                }
-            }
-        })
+        val subscribe = RxImage.setWallPaper(this, saveImgUrl)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    showToast("壁纸设置成功")
+                }, {
+                    showToast("壁纸设置失败")
+                })
+        addSubscription(subscribe)
     }
 }

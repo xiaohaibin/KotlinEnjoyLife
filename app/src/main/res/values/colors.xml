@@ -10,4 +10,5 @@
     <color name="color_bbbbbb">#bbbbbb</color>
     <color name="color_008cf0">#008cf0</color>
     <color name="color_ededed">#ededed</color>
+    <color name="divider">#cacaca</color>
 </resources>
