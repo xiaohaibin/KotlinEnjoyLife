@@ -1,7 +1,10 @@
 package com.stx.xhb.enjoylife.ui.adapter
 
 import android.support.v4.view.ViewCompat
+import android.support.v7.widget.RecyclerView
 import android.view.View
+import android.view.ViewGroup
+import android.widget.LinearLayout
 import android.widget.TextView
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.chad.library.adapter.base.BaseQuickAdapter
@@ -32,7 +35,8 @@ class TuChongFeedAdapter(layoutResId: Int) : BaseQuickAdapter<FeedListBean, Base
             feedListBean.title.substring(0, limit) + "..."
         else
             feedListBean.title
-        (holder.getView(R.id.tv_title) as TextView).setText(text)
+        val textView = holder.getView(R.id.tv_title) as TextView
+        textView.setText(text)
 
         val images = feedListBean.images
         if (images.isEmpty()) {
@@ -45,11 +49,6 @@ class TuChongFeedAdapter(layoutResId: Int) : BaseQuickAdapter<FeedListBean, Base
                 .centerCrop()
                 .transition(DrawableTransitionOptions.withCrossFade(500))
                 .into(imageView)
-                .getSize { width, height ->
-                    if (!holder.itemView.isShown()) {
-                        holder.itemView.setVisibility(View.VISIBLE)
-                    }
-                }
         holder.itemView.setTag(url)
         ViewCompat.setTransitionName(imageView, url)
 

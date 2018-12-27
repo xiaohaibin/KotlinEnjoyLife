@@ -2,6 +2,7 @@ package com.stx.xhb.enjoylife.ui.activity
 
 import android.Manifest
 import android.graphics.Color
+import android.opengl.Visibility
 import android.os.Environment
 import android.support.v4.view.ViewCompat
 import android.support.v4.view.ViewPager
@@ -12,6 +13,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.jaeger.library.StatusBarUtil
 import com.stx.xhb.core.base.BaseActivity
+import com.stx.xhb.core.transfroms.StackTransformer
 import com.stx.xhb.core.utils.DateUtils
 import com.stx.xhb.core.utils.RxImage
 import com.stx.xhb.core.utils.ShareUtils
@@ -35,6 +37,9 @@ class WallPagerActivity : BaseActivity() {
     private var mPos: Int = 0
     private var saveImgUrl = ""
     private var photoViewpager: ViewPager? = null
+    private var btnSave: TextView? = null
+    private var btnSetWallpaper: TextView? = null
+    private var ivClose: ImageView? = null
 
     companion object {
         val TRANSIT_PIC = "transit_img"
@@ -49,16 +54,19 @@ class WallPagerActivity : BaseActivity() {
         findViewById<TextView>(R.id.tv_time).text = DateUtils.getCurrentHourAndMinute()
         findViewById<TextView>(R.id.tv_current_date).text = DateUtils.getCurrentMouthDayWeek()
         findViewById<TextView>(R.id.tv_lunar).text = DateUtils.getLunarYearMonthDay()
-        findViewById<TextView>(R.id.btn_save).setOnClickListener(View.OnClickListener {
-            saveImage()
+        btnSave = findViewById<TextView>(R.id.btn_save)
+        btnSave?.setOnClickListener(View.OnClickListener {
+            saveImageToLocal()
         })
-        findViewById<TextView>(R.id.btn_set_wallpaper).setOnClickListener(View.OnClickListener {
-            setWallpaper()
+        btnSetWallpaper = findViewById<TextView>(R.id.btn_set_wallpaper)
+        btnSetWallpaper?.setOnClickListener(View.OnClickListener {
+            setWallPaperForUser()
         })
-        findViewById<ImageView>(R.id.iv_close).setOnClickListener(View.OnClickListener {
-           onBackPressed()
+        ivClose = findViewById<ImageView>(R.id.iv_close)
+        ivClose?.setOnClickListener(View.OnClickListener {
+            onBackPressed()
         })
-        photoViewpager?.pageMargin = (resources.displayMetrics.density * 15).toInt()
+        photoViewpager?.setPageTransformer(true, StackTransformer())
         ViewCompat.setTransitionName(photoViewpager, PhotoViewActivity.TRANSIT_PIC)
         StatusBarUtil.setColor(this, Color.BLACK)
         hideBottomUIMenu()
@@ -84,7 +92,15 @@ class WallPagerActivity : BaseActivity() {
         photoViewpager?.currentItem = mPos
         adapter?.setOnClickListener(object : WallPaperPagerAdapter.onImageLayoutListener {
             override fun setOnImageOnClik() {
-
+                if (btnSave?.visibility == View.VISIBLE) {
+                    btnSave?.visibility = View.GONE
+                    ivClose?.visibility = View.GONE
+                    btnSetWallpaper?.visibility = View.GONE
+                } else {
+                    btnSave?.visibility = View.VISIBLE
+                    ivClose?.visibility = View.VISIBLE
+                    btnSetWallpaper?.visibility = View.VISIBLE
+                }
             }
 
             override fun setLongClick(url: String) {
@@ -112,15 +128,11 @@ class WallPagerActivity : BaseActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.menu_save -> {
-                if (checkPermissions(arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE))) {
-                    saveImage()
-                } else {
-                    requestPermission(arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE), PERMISS_REQUEST_CODE)
-                }
+                saveImageToLocal()
                 return true
             }
             R.id.menu_setting_picture -> {
-                setWallpaper()
+                setWallPaperForUser()
                 return true
             }
             R.id.menu_share -> {
@@ -131,6 +143,22 @@ class WallPagerActivity : BaseActivity() {
                 return true
             }
             else -> return super.onOptionsItemSelected(item)
+        }
+    }
+
+    fun setWallPaperForUser() {
+        if (checkPermissions(arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.SET_WALLPAPER))) {
+            setWallpaper()
+        } else {
+            requestPermission(arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.SET_WALLPAPER), PERMISS_REQUEST_CODE)
+        }
+    }
+
+    fun saveImageToLocal() {
+        if (checkPermissions(arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE))) {
+            saveImage()
+        } else {
+            requestPermission(arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE), PERMISS_REQUEST_CODE)
         }
     }
 
@@ -159,7 +187,6 @@ class WallPagerActivity : BaseActivity() {
         val subscribe = RxImage.setWallPaper(this, saveImgUrl)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
-                    showToast("壁纸设置成功")
                 }, {
                     showToast("壁纸设置失败")
                 })

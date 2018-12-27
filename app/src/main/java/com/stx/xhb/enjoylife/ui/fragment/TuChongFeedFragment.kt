@@ -80,7 +80,7 @@ class TuChongFeedFragment : BaseFragment(), GeTuChongFeedContract.View, SwipeRef
     }
 
     override fun onResponse(feedList: List<FeedListBean>, isMore: Boolean) {
-        onLoadComplete(page)
+        onLoadComplete()
         mTuChongListAdapter?.setEnableLoadMore(isMore)
         posId = feedList[feedList.size - 1].post_id.toString()
         if (page == 1) {
@@ -105,6 +105,7 @@ class TuChongFeedFragment : BaseFragment(), GeTuChongFeedContract.View, SwipeRef
     }
 
     override fun showMsg(msg: String) {
+        onLoadComplete()
         Toast.makeText(mContext, msg, Toast.LENGTH_SHORT).show()
     }
 
@@ -118,7 +119,7 @@ class TuChongFeedFragment : BaseFragment(), GeTuChongFeedContract.View, SwipeRef
         getWallPaperPresenter?.destory()
     }
 
-    private fun onLoadComplete(page: Int) {
+    private fun onLoadComplete() {
         if (page == 1) {
             mSwipeRefreshLayout?.setRefreshing(false)
         } else {

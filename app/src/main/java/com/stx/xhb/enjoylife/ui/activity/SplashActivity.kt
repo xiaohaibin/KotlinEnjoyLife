@@ -41,8 +41,7 @@ class SplashActivity : BaseActivity(), GetWelconmeImgConTract.View {
 
     override fun initView() {
         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
-        //设置状态栏透明
-        StatusBarUtil.setTransparent(this)
+        hideBottomUIMenu()
         val ivSplash = findViewById<ImageView>(R.id.iv_splash)
         val splashView = findViewById<FrameLayout>(R.id.splash_view)
         if (TextUtils.isEmpty(getWelcomeImg())) {

@@ -61,7 +61,7 @@ class VideoFragment : BaseFragment(), GetVideoContract.getVideoView {
                 val intent = Intent(activity, VideoDetailsActivity::class.java)
                 val bundle = Bundle()
                 val dataEntity = data.data
-                if (!"video".equals(data.type,true)) {
+                if (!"video".equals(data.type, true)) {
                     return
                 }
                 bundle.putString("title", dataEntity.title)
@@ -150,6 +150,11 @@ class VideoFragment : BaseFragment(), GetVideoContract.getVideoView {
     }
 
     override fun showMsg(msg: String) {
+        if (isRefresh) {
+            mSwipeRefreshLayout?.setRefreshing(false)
+        } else {
+            mRecyclerAdapter?.loadMoreComplete()
+        }
         showToast(msg)
     }
 

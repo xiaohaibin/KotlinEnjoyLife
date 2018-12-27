@@ -94,6 +94,7 @@ class ZhiHuFragment : BaseFragment(), GetZhiHuNewsContract.View, SwipeRefreshLay
 
     override fun showMsg(msg: String) {
         showToast(msg)
+        onLoadComplete()
     }
 
     override fun onRefresh() {

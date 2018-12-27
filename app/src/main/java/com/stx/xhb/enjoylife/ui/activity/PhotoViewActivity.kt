@@ -56,7 +56,6 @@ class PhotoViewActivity : BaseActivity() {
         toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        photoViewpager?.pageMargin = (resources.displayMetrics.density * 15).toInt()
         ViewCompat.setTransitionName(photoViewpager, PhotoViewActivity.TRANSIT_PIC)
     }
 
@@ -81,6 +80,7 @@ class PhotoViewActivity : BaseActivity() {
         val adapter = imageList?.let { PhotoViewPagerAdapter(this, it) }
         photoViewpager?.adapter = adapter
         photoViewpager?.currentItem = mPos
+
         adapter?.setOnClickListener(object : PhotoViewPagerAdapter.onImageLayoutListener {
             override fun setOnImageOnClik() {
                 onBackPressed()
@@ -130,7 +130,11 @@ class PhotoViewActivity : BaseActivity() {
                 return true
             }
             R.id.menu_setting_picture -> {
-                setWallpaper()
+                if (checkPermissions(arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.SET_WALLPAPER))) {
+                    setWallpaper()
+                } else {
+                    requestPermission(arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.SET_WALLPAPER), PERMISS_REQUEST_CODE)
+                }
                 return true
             }
             R.id.menu_share -> {
@@ -168,7 +172,6 @@ class PhotoViewActivity : BaseActivity() {
         val subscribe = RxImage.setWallPaper(this, saveImgUrl)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
-                    showToast("壁纸设置成功")
                 }, {
                     showToast("壁纸设置失败")
                 })

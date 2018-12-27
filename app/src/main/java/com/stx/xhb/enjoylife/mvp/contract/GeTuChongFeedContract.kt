@@ -14,7 +14,7 @@ import com.stx.xhb.enjoylife.data.entity.feed.FeedListBean
 interface GeTuChongFeedContract {
 
     interface Model : IModel {
-        fun getFeed(page:Int,type:String,posId:String)
+        fun getFeed(page: Int, type: String, posId: String)
     }
 
     interface View : IBaseView {

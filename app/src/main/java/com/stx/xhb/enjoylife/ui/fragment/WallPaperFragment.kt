@@ -81,7 +81,7 @@ class WallPaperFragment : BaseFragment(), GetWallPaperContract.View, SwipeRefres
     }
 
     override fun onResponse(feedList: List<Feed>, isMore: Boolean) {
-        onLoadComplete(page)
+        onLoadComplete()
         mTuChongListAdapter?.setEnableLoadMore(isMore)
         for (i in feedList.indices) {
             val feedListBean = feedList[i]
@@ -106,6 +106,7 @@ class WallPaperFragment : BaseFragment(), GetWallPaperContract.View, SwipeRefres
     }
 
     override fun showMsg(msg: String) {
+        onLoadComplete()
         Toast.makeText(mContext, msg, Toast.LENGTH_SHORT).show()
     }
 
@@ -119,7 +120,7 @@ class WallPaperFragment : BaseFragment(), GetWallPaperContract.View, SwipeRefres
         getWallPaperPresenter?.destory()
     }
 
-    private fun onLoadComplete(page: Int) {
+    private fun onLoadComplete() {
         if (page == 1) {
             mTuChongListAdapter?.setNewData(null)
             mSwipeRefreshLayout?.setRefreshing(false)
