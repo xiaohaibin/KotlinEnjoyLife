@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
 import android.view.View;
+import android.view.animation.LinearInterpolator;
 
 /**
  * @author: xiaohaibin.
@@ -13,48 +14,6 @@ import android.view.View;
  * @describe:
  */
 public class AnimationUtils {
-
-    /**
-     * 从向右边边移动view，结束时设置为gone
-     * @param view
-     */
-    public static void rightremove(final View view) {
-        if (view == null) {
-            return;
-        }
-        float width = view.getWidth() == 0 ? ScreenUtil.getScreenWidth(view.getContext()) : view.getWidth();
-
-        ObjectAnimator oa = ObjectAnimator.ofFloat(view, "translationX", 0, width);
-        oa.addListener(new AnimatorListenerAdapter() {
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                view.setVisibility(View.GONE);
-            }
-        });
-        oa.setDuration(300);
-        oa.start();
-    }
-
-    /**
-     * 从向右边边移动view
-     * @param view
-     */
-    public static void rightshow(final View view) {
-        if (view == null) {
-            return;
-        }
-        float width = view.getWidth() == 0 ? ScreenUtil.getScreenWidth(view.getContext()) : view.getWidth();
-
-        ObjectAnimator oa = ObjectAnimator.ofFloat(view, "translationX", 0, -width);
-        oa.addListener(new AnimatorListenerAdapter() {
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                view.setVisibility(View.VISIBLE);
-            }
-        });
-        oa.setDuration(300);
-        oa.start();
-    }
 
     /**
      * 从向下边移动view，结束时设置为gone
@@ -67,13 +26,14 @@ public class AnimationUtils {
         float width = view.getWidth() == 0 ? ScreenUtil.getScreenWidth(view.getContext()) : view.getWidth();
 
         ObjectAnimator oa = ObjectAnimator.ofFloat(view, "translationY", 0, width);
+        oa.setInterpolator(new LinearInterpolator());
         oa.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
                 view.setVisibility(View.GONE);
             }
         });
-        oa.setDuration(300);
+        oa.setDuration(500);
         oa.start();
     }
 
@@ -87,14 +47,15 @@ public class AnimationUtils {
         }
         float width = view.getWidth() == 0 ? ScreenUtil.getScreenWidth(view.getContext()) : view.getWidth();
 
-        ObjectAnimator oa = ObjectAnimator.ofFloat(view, "translationY", 0, -width);
+        ObjectAnimator oa = ObjectAnimator.ofFloat(view, "translationY", width, 0);
+        oa.setInterpolator(new LinearInterpolator());
         oa.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
                 view.setVisibility(View.VISIBLE);
             }
         });
-        oa.setDuration(300);
+        oa.setDuration(500);
         oa.start();
     }
 }

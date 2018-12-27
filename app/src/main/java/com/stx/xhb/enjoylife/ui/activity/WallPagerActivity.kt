@@ -92,19 +92,17 @@ class WallPagerActivity : BaseActivity() {
         photoViewpager?.currentItem = mPos
         adapter?.setOnClickListener(object : WallPaperPagerAdapter.onImageLayoutListener {
             override fun setOnImageOnClik() {
-                if (btnSave?.visibility == View.VISIBLE) {
+                if (ivClose?.visibility == View.VISIBLE) {
                     AnimationUtils.bottomremove(btnSave)
                     AnimationUtils.bottomremove(btnSetWallpaper)
-                    AnimationUtils.rightremove(ivClose)
-//                    ivClose?.visibility = View.GONE
+                    ivClose?.visibility = View.GONE
 //                    btnSave?.visibility = View.GONE
 //                    btnSetWallpaper?.visibility = View.GONE
                 } else {
                     AnimationUtils.bottomshow(btnSave)
                     AnimationUtils.bottomshow(btnSetWallpaper)
-                    AnimationUtils.rightshow(ivClose)
+                    ivClose?.visibility = View.VISIBLE
 //                    btnSave?.visibility = View.VISIBLE
-//                    ivClose?.visibility = View.VISIBLE
 //                    btnSetWallpaper?.visibility = View.VISIBLE
                 }
             }
