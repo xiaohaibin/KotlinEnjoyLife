@@ -2,7 +2,6 @@ package com.stx.xhb.enjoylife.ui.activity
 
 import android.Manifest
 import android.graphics.Color
-import android.opengl.Visibility
 import android.os.Environment
 import android.support.v4.view.ViewCompat
 import android.support.v4.view.ViewPager
@@ -14,6 +13,7 @@ import android.widget.TextView
 import com.jaeger.library.StatusBarUtil
 import com.stx.xhb.core.base.BaseActivity
 import com.stx.xhb.core.transfroms.StackTransformer
+import com.stx.xhb.core.utils.AnimationUtils
 import com.stx.xhb.core.utils.DateUtils
 import com.stx.xhb.core.utils.RxImage
 import com.stx.xhb.core.utils.ShareUtils
@@ -93,13 +93,19 @@ class WallPagerActivity : BaseActivity() {
         adapter?.setOnClickListener(object : WallPaperPagerAdapter.onImageLayoutListener {
             override fun setOnImageOnClik() {
                 if (btnSave?.visibility == View.VISIBLE) {
-                    btnSave?.visibility = View.GONE
-                    ivClose?.visibility = View.GONE
-                    btnSetWallpaper?.visibility = View.GONE
+                    AnimationUtils.bottomremove(btnSave)
+                    AnimationUtils.bottomremove(btnSetWallpaper)
+                    AnimationUtils.rightremove(ivClose)
+//                    ivClose?.visibility = View.GONE
+//                    btnSave?.visibility = View.GONE
+//                    btnSetWallpaper?.visibility = View.GONE
                 } else {
-                    btnSave?.visibility = View.VISIBLE
-                    ivClose?.visibility = View.VISIBLE
-                    btnSetWallpaper?.visibility = View.VISIBLE
+                    AnimationUtils.bottomshow(btnSave)
+                    AnimationUtils.bottomshow(btnSetWallpaper)
+                    AnimationUtils.rightshow(ivClose)
+//                    btnSave?.visibility = View.VISIBLE
+//                    ivClose?.visibility = View.VISIBLE
+//                    btnSetWallpaper?.visibility = View.VISIBLE
                 }
             }
 
