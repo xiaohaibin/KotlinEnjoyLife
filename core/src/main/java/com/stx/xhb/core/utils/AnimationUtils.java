@@ -24,7 +24,6 @@ public class AnimationUtils {
             return;
         }
         float width = view.getWidth() == 0 ? ScreenUtil.getScreenWidth(view.getContext()) : view.getWidth();
-
         ObjectAnimator oa = ObjectAnimator.ofFloat(view, "translationY", 0, width);
         oa.setInterpolator(new LinearInterpolator());
         oa.addListener(new AnimatorListenerAdapter() {
@@ -45,14 +44,13 @@ public class AnimationUtils {
         if (view == null) {
             return;
         }
-        float width = view.getWidth() == 0 ? ScreenUtil.getScreenWidth(view.getContext()) : view.getWidth();
-
-        ObjectAnimator oa = ObjectAnimator.ofFloat(view, "translationY", width, 0);
+        view.setVisibility(View.VISIBLE);
+        float translationY = view.getTranslationY();
+        ObjectAnimator oa = ObjectAnimator.ofFloat(view, "translationY", translationY, 0);
         oa.setInterpolator(new LinearInterpolator());
         oa.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
-                view.setVisibility(View.VISIBLE);
             }
         });
         oa.setDuration(500);

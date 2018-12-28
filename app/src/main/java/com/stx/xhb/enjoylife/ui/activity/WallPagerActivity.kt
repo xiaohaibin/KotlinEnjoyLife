@@ -9,6 +9,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import com.jaeger.library.StatusBarUtil
 import com.stx.xhb.core.base.BaseActivity
@@ -40,6 +41,7 @@ class WallPagerActivity : BaseActivity() {
     private var btnSave: TextView? = null
     private var btnSetWallpaper: TextView? = null
     private var ivClose: ImageView? = null
+    private var llBtn: LinearLayout? = null
 
     companion object {
         val TRANSIT_PIC = "transit_img"
@@ -51,6 +53,7 @@ class WallPagerActivity : BaseActivity() {
 
     override fun initView() {
         photoViewpager = findViewById(R.id.photo_viewpager)
+        llBtn = findViewById(R.id.ll_btn)
         findViewById<TextView>(R.id.tv_time).text = DateUtils.getCurrentHourAndMinute()
         findViewById<TextView>(R.id.tv_current_date).text = DateUtils.getCurrentMouthDayWeek()
         findViewById<TextView>(R.id.tv_lunar).text = DateUtils.getLunarYearMonthDay()
@@ -93,17 +96,11 @@ class WallPagerActivity : BaseActivity() {
         adapter?.setOnClickListener(object : WallPaperPagerAdapter.onImageLayoutListener {
             override fun setOnImageOnClik() {
                 if (ivClose?.visibility == View.VISIBLE) {
-                    AnimationUtils.bottomremove(btnSave)
-                    AnimationUtils.bottomremove(btnSetWallpaper)
+                    AnimationUtils.bottomremove(llBtn)
                     ivClose?.visibility = View.GONE
-//                    btnSave?.visibility = View.GONE
-//                    btnSetWallpaper?.visibility = View.GONE
                 } else {
-                    AnimationUtils.bottomshow(btnSave)
-                    AnimationUtils.bottomshow(btnSetWallpaper)
+                    AnimationUtils.bottomshow(llBtn)
                     ivClose?.visibility = View.VISIBLE
-//                    btnSave?.visibility = View.VISIBLE
-//                    btnSetWallpaper?.visibility = View.VISIBLE
                 }
             }
 
