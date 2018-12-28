@@ -28,7 +28,6 @@ import android.view.View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
 import android.view.View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
 
 
-
 /**
  * @author: xiaohaibin.
  * @time: 2018/6/25
@@ -238,7 +237,7 @@ abstract class BaseActivity : RxAppCompatActivity() {
         }
     }
 
-    fun showToast(message: CharSequence, duration: Int = Toast.LENGTH_SHORT){
+    fun showToast(message: CharSequence, duration: Int = Toast.LENGTH_SHORT) {
         Toast.makeText(this, message, duration).show()
     }
 

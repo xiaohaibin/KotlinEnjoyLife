@@ -70,7 +70,6 @@ class WallPaperFragment : BaseFragment(), GetWallPaperContract.View, SwipeRefres
                     e.printStackTrace()
                     startActivity(intent)
                 }
-
             }
         })
         mSwipeRefreshLayout?.setOnRefreshListener(this)
