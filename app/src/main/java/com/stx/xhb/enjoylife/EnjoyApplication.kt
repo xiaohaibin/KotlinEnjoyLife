@@ -1,9 +1,13 @@
 package com.stx.xhb.enjoylife
 
 import android.app.Application
+import android.os.Build
 import com.stx.xhb.core.base.BaseApplication
 import com.stx.xhb.core.utils.LoggerHelper
 import com.tencent.bugly.Bugly
+import android.os.StrictMode
+
+
 
 /**
  * @author: xiaohaibin.
@@ -19,5 +23,11 @@ class EnjoyApplication : BaseApplication() {
         /** 初始化日志工具类 */
         LoggerHelper.initLogger(true)
         Bugly.init(applicationContext, "784b642b7a", true)
+        //适配7.0以上调用系统分享
+        val builder = StrictMode.VmPolicy.Builder()
+        StrictMode.setVmPolicy(builder.build())
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
+            builder.detectFileUriExposure()
+        }
     }
 }

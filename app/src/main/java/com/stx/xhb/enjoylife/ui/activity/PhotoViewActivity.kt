@@ -1,8 +1,6 @@
 package com.stx.xhb.enjoylife.ui.activity
 
 import android.Manifest
-import android.app.WallpaperManager
-import android.graphics.Bitmap
 import android.os.Environment
 import android.support.v4.view.ViewCompat
 import android.support.v4.view.ViewPager
@@ -11,18 +9,13 @@ import android.support.v7.widget.Toolbar
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.TextView
-import com.bumptech.glide.request.target.SimpleTarget
-import com.bumptech.glide.request.transition.Transition
 import com.stx.xhb.core.base.BaseActivity
 import com.stx.xhb.core.utils.RxImage
 import com.stx.xhb.core.utils.ShareUtils
 import com.stx.xhb.enjoylife.R
-import com.stx.xhb.enjoylife.config.GlideApp
 import com.stx.xhb.enjoylife.ui.adapter.PhotoViewPagerAdapter
 import rx.android.schedulers.AndroidSchedulers
-import rx.functions.Action1
 import java.io.File
-import java.io.IOException
 import java.util.*
 
 /**
@@ -57,6 +50,7 @@ class PhotoViewActivity : BaseActivity() {
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         ViewCompat.setTransitionName(photoViewpager, PhotoViewActivity.TRANSIT_PIC)
+
     }
 
     override fun initData() {
@@ -138,10 +132,16 @@ class PhotoViewActivity : BaseActivity() {
                 return true
             }
             R.id.menu_share -> {
-                val subscribe = RxImage.saveImageAndGetPathObservable(this, saveImgUrl)
-                        .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
-                        .subscribe({ uri -> ShareUtils.shareImage(this@PhotoViewActivity, uri, getString(R.string.share_image_to)) }, { throwable -> showToast(throwable.message.toString()) })
-                addSubscription(subscribe)
+                if (checkPermissions(arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE))){
+                    val subscribe = RxImage.saveImageAndGetPathObservable(this, saveImgUrl)
+                            .observeOn(rx.android.schedulers.AndroidSchedulers.mainThread())
+                            .subscribe({ uri ->
+                                ShareUtils.shareImage(this@PhotoViewActivity, uri, getString(R.string.share_image_to))
+                            }, { throwable -> showToast(throwable.message.toString()) })
+                    addSubscription(subscribe)
+                }else{
+                    requestPermission(arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE), PERMISS_REQUEST_CODE)
+                }
                 return true
             }
             else -> return super.onOptionsItemSelected(item)
