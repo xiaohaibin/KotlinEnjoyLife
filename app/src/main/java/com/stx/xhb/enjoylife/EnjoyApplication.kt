@@ -1,12 +1,10 @@
 package com.stx.xhb.enjoylife
 
-import android.app.Application
 import android.os.Build
+import android.os.StrictMode
 import com.stx.xhb.core.base.BaseApplication
 import com.stx.xhb.core.utils.LoggerHelper
 import com.tencent.bugly.Bugly
-import android.os.StrictMode
-
 
 
 /**

@@ -6,6 +6,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.net.Uri;
+import android.support.annotation.IdRes;
+import android.support.annotation.StringRes;
 import android.widget.Toast;
 
 import com.stx.xhb.core.R;
@@ -19,7 +21,12 @@ import java.io.File;
  */
 public class ShareUtils {
 
-    public static void share(Context context, int stringRes) {
+    /**
+     * 分享文本
+     * @param context
+     * @param stringRes
+     */
+    public static void share(Context context, @StringRes int stringRes) {
         share(context, context.getString(stringRes));
     }
 
